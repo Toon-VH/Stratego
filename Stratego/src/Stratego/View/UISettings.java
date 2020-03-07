@@ -18,8 +18,12 @@ public class UISettings {
     private Path AboutImagePath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"AboutImage.png");
     private Path applicationIconPath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"Logo.png");
     private Path startScreenImagePath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"StartScreenImage.png");
+    private Path General = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"Generaal.png");
+    private Path grassImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"grass1.png");
+    private Path water1 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"water1.png");
     private Path setupFileImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"file.png");
     private Path infoTextPath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
+
 
 
     public UISettings() {
@@ -54,6 +58,18 @@ public class UISettings {
 
     public Path getSetupFileImg() {
         return setupFileImg;
+    }
+
+    public Path getGrassImg() {
+        return grassImg;
+    }
+
+    public Path getGeneral() {
+        return General;
+    }
+
+    public Path getWater1() {
+        return water1;
     }
 
     public Path getInfoTextPath () {return this.infoTextPath;}
