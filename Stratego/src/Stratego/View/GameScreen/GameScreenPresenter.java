@@ -1,10 +1,8 @@
-package Stratego.View.SetupScreen;
+package Stratego.View.GameScreen;
 
 import Stratego.Model.Stratego;
-import Stratego.View.GameScreen.GameScreenPresenter;
-import Stratego.View.GameScreen.GameScreenView;
+import Stratego.View.SetupScreen.SetupScreenView;
 import Stratego.View.UISettings;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -12,18 +10,16 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.net.MalformedURLException;
-
-public class SetupScreenPresenter {
+public class GameScreenPresenter {
 
     private Stratego model;
-    private SetupScreenView view;
+    private GameScreenView view;
     UISettings uiSettings;
     private Stage stage;
 
 
 
-    public SetupScreenPresenter(Stratego model, SetupScreenView view, UISettings uiSettings,Stage stage) {
+    public GameScreenPresenter(Stratego model, GameScreenView view, UISettings uiSettings,Stage stage) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
@@ -34,22 +30,6 @@ public class SetupScreenPresenter {
 
     private void addEventHandlers() {
         // Koppelt event handlers (anon. inner klassen)
-        view.getReady().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                GameScreenView gameView = new GameScreenView(uiSettings);
-                GameScreenPresenter stpPresenter = new GameScreenPresenter(model, gameView, uiSettings, stage);
-                view.getScene().setRoot(gameView);
-                try {
-                    gameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
-                stage.setMaximized(true);
-                stpPresenter.windowsHandler();
-
-            }
-        });
         // aan de controls uit de view.
         // Event handlers: roepen methodes aan uit het
         // model en zorgen voor een update van de view.

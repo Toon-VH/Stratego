@@ -1,4 +1,4 @@
-package Stratego.View.SetupScreen;
+package Stratego.View.GameScreen;
 
 import Stratego.View.UISettings;
 import javafx.geometry.Insets;
@@ -17,14 +17,14 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 
 
-public class SetupScreenView extends BorderPane {
+public class GameScreenView extends BorderPane {
 
     // private Node attributen (controls)
 
     private Button ready;
     private UISettings uiSettings;
 
-    public SetupScreenView(UISettings uiSettings) {
+    public GameScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         this.initialiseNodes();
         this.layoutNodes();
@@ -38,17 +38,15 @@ public class SetupScreenView extends BorderPane {
     private void layoutNodes() {
         ImageView fileImg = null;
         BorderPane top = new BorderPane();
-        Label title = new Label("Setup your Army");
+        Label title = new Label("Red its youre turn");
         GridPane gridPlace = new GridPane();
-        GridPane gridTake = new GridPane();
-        HBox bottem = new HBox();
-        bottem.getChildren().addAll(gridTake,ready);
         gridPlace.setHgap(15);
         gridPlace.setVgap(15);
 
         ImageView imgInfo = null;
         try {
-            imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));;
+            imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
+            ;
             top.setRight(imgInfo);
             imgInfo.setFitWidth(70);
             imgInfo.setFitHeight(70);
@@ -56,28 +54,15 @@ public class SetupScreenView extends BorderPane {
             e.printStackTrace();
         }
 
-        if (Files.exists(uiSettings.getSetupFileImg())) {
-            try {
-                fileImg = new ImageView(new Image(uiSettings.getSetupFileImg().toUri().toURL().toString()));
-                fileImg.setPreserveRatio(true);
-                fileImg.setFitWidth(70);
-                fileImg.setSmooth(true);
-                this.setTop(fileImg);
-            } catch (MalformedURLException ex) {
-                // do nothing, if toURL-conversion fails, program can continue
-            }
-        } else { // do nothing, if StartScreenImage is not available, program can continue
-        }
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 try {
                     ImageView img;
-                    if (i == 3 && (j == 2 || j == 3 || j == 6 || j == 7)) {
+                    if ((i == 4 || i == 5) && (j == 2 || j == 3 || j == 6 || j == 7)) {
                         img = new ImageView(new Image(uiSettings.getWater1().toUri().toURL().toString()));
-                    } else{
+                    } else {
                         img = new ImageView(new Image(uiSettings.getGrassImg().toUri().toURL().toString()));
                     }
-
                     img.setFitWidth(70);
                     img.setFitHeight(70);
                     gridPlace.add(img, j, i);
@@ -87,39 +72,15 @@ public class SetupScreenView extends BorderPane {
                 }
             }
         }
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 6; j++) {
 
-
-                try {
-                    ImageView takeImg = new ImageView(new Image(uiSettings.getGeneral().toUri().toURL().toString()));
-                    BorderPane borderPane = new BorderPane();
-                    borderPane.setTop(new Label("Generaal"));
-                    borderPane.setCenter(takeImg);
-                    takeImg.setFitWidth(70);
-                    takeImg.setFitHeight(70);
-                    borderPane.setBottom(new Label("5"));
-                    gridTake.add(borderPane, j, i);
-
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }
         setTop(top);
         top.setLeft(fileImg);
         top.setRight(imgInfo);
         top.setCenter(title);
         setCenter(gridPlace);
-        setMargin(gridPlace,new Insets(100,0,0,0));
-        setBottom(bottem);
+        setMargin(gridPlace, new Insets(100, 0, 0, 0));
         title.setFont(Font.font("Cambria", 48));
-        setMargin(title,new Insets(100,0,0,0));
-        bottem.setAlignment(Pos.CENTER);
-        bottem.setSpacing(200);
+        setMargin(title, new Insets(100, 0, 0, 0));
         title.setAlignment(Pos.BASELINE_CENTER);
         gridPlace.setAlignment(Pos.BASELINE_CENTER);
     }
