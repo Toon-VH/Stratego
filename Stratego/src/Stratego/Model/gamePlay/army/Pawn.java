@@ -1,8 +1,9 @@
-package Stratego.Model.army;
+package Stratego.Model.gamePlay.army;
 
 
-import Stratego.Model.playground.Location;
-import Stratego.Model.playground.PawnLocation;
+import Stratego.Model.gamePlay.playground.Location;
+import Stratego.Model.gamePlay.playground.PawnLocation;
+
 
 public class Pawn {
 

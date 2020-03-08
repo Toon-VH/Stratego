@@ -1,7 +1,8 @@
-package Stratego.Model.army;
+package Stratego.Model.gamePlay.army;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Army {
     private List<Pawn> pawns;

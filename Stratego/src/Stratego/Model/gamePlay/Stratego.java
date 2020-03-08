@@ -1,10 +1,9 @@
-package Stratego.Model;
+package Stratego.Model.gamePlay;
 
+import Stratego.Model.gamePlay.army.ArmyColor;
+import Stratego.Model.gamePlay.player.Player;
+import Stratego.Model.gamePlay.playground.Playground;
 
-
-import Stratego.Model.army.ArmyColor;
-import Stratego.Model.player.Player;
-import Stratego.Model.playground.Playground;
 
 import java.nio.file.Path;
 import java.util.Random;

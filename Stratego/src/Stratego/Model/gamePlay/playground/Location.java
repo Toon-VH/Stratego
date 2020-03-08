@@ -1,4 +1,4 @@
-package Stratego.Model.playground;
+package Stratego.Model.gamePlay.playground;
 
 public class Location {
 

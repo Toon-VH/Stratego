@@ -1,14 +1,16 @@
-package Stratego.Model.player;
+package Stratego.Model.gamePlay.player;
 
 
-import Stratego.Model.Stratego;
-import Stratego.Model.army.Army;
-import Stratego.Model.army.ArmyColor;
-import Stratego.Model.army.Pawn;
-import Stratego.Model.army.RankType;
-import Stratego.Model.playground.Location;
-import Stratego.Model.playground.PawnLocation;
-import Stratego.Model.playground.Playground;
+
+import Stratego.Model.gamePlay.Stratego;
+import Stratego.Model.gamePlay.army.Army;
+import Stratego.Model.gamePlay.army.ArmyColor;
+import Stratego.Model.gamePlay.army.Pawn;
+import Stratego.Model.gamePlay.army.RankType;
+import Stratego.Model.gamePlay.playground.Location;
+import Stratego.Model.gamePlay.playground.PawnLocation;
+import Stratego.Model.gamePlay.playground.Playground;
+
 
 public class Player {
 

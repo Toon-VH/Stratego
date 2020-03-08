@@ -1,7 +1,6 @@
-package Stratego.Model.playground;
+package Stratego.Model.gamePlay.playground;
 
-
-import Stratego.Model.army.Pawn;
+import Stratego.Model.gamePlay.army.Pawn;
 
 public class PawnLocation extends Location {
 

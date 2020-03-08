@@ -1,6 +1,7 @@
 package Stratego.View.HomeScreen;
 
-import Stratego.Model.Stratego;
+import Stratego.Model.gamePlay.Stratego;
+import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.SetupScreen.SetupScreenPresenter;
 import Stratego.View.SetupScreen.SetupScreenView;
 import Stratego.View.UISettings;
@@ -17,11 +18,13 @@ import java.net.MalformedURLException;
 public class HomeScreenPresenter {
 
     private Stratego model;
+    private StrategoSetup strategoSetup;
     private HomeScreenView view;
     UISettings uiSettings;
     private Stage stage;
 
-    public HomeScreenPresenter(Stratego model, HomeScreenView view, UISettings uiSettings, Stage stage) {
+    public HomeScreenPresenter(Stratego model, StrategoSetup strategoSetup, HomeScreenView view, UISettings uiSettings, Stage stage) {
+        this.strategoSetup = strategoSetup;
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
@@ -35,7 +38,7 @@ public class HomeScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 SetupScreenView stpView = new SetupScreenView(uiSettings);
-                SetupScreenPresenter stpPresenter = new SetupScreenPresenter(model, stpView, uiSettings, stage);
+                SetupScreenPresenter stpPresenter = new SetupScreenPresenter(model,strategoSetup, stpView, uiSettings, stage);
                 view.getScene().setRoot(stpView);
                 try {
                     stpView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
@@ -51,7 +54,7 @@ public class HomeScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 SetupScreenView stpView = new SetupScreenView(uiSettings);
-                SetupScreenPresenter stpPresenter = new SetupScreenPresenter(model, stpView, uiSettings, stage);
+                SetupScreenPresenter stpPresenter = new SetupScreenPresenter(model,strategoSetup, stpView, uiSettings, stage);
                 view.getScene().setRoot(stpView);
                 try {
                     stpView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());

@@ -1,22 +1,20 @@
 package Stratego;
 
-
-import Stratego.Model.Stratego;
-import Stratego.Model.army.ArmyColor;
-import Stratego.Model.army.Pawn;
-import Stratego.Model.player.Player;
-import Stratego.Model.playground.Location;
-import Stratego.Model.playground.PawnLocation;
-import Stratego.Model.playground.Playground;
+import Stratego.Model.gamePlay.Stratego;
+import Stratego.Model.gamePlay.army.ArmyColor;
+import Stratego.Model.gamePlay.army.Pawn;
+import Stratego.Model.gamePlay.player.Player;
+import Stratego.Model.gamePlay.playground.Location;
+import Stratego.Model.gamePlay.playground.PawnLocation;
+import Stratego.Model.gamePlay.playground.Playground;
+import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.StartScreen.StartScreenPresenter;
 import Stratego.View.StartScreen.StartScreenView;
 import Stratego.View.UISettings;
-
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.stage.*;
-
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,8 +27,9 @@ public class StrategoMain extends Application {
     public void start(Stage primaryStage) {
         UISettings uiSettings = new UISettings();
         Stratego model = new Stratego("Speler1","Speler2");
+        StrategoSetup strategoSetup = new StrategoSetup();
         StartScreenView view = new StartScreenView(uiSettings);
-        StartScreenPresenter presenter = new StartScreenPresenter(model, view, uiSettings, primaryStage);
+        StartScreenPresenter presenter = new StartScreenPresenter(model,strategoSetup, view, uiSettings, primaryStage);
         Scene scene = new Scene(view);
         if (uiSettings.styleSheetAvailable()){
             try {

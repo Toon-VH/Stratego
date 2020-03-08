@@ -1,7 +1,8 @@
 package Stratego.View.StartScreen;
 
 
-import Stratego.Model.Stratego;
+import Stratego.Model.gamePlay.Stratego;
+import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.HomeScreen.HomeScreenPresenter;
 import Stratego.View.HomeScreen.HomeScreenView;
 import Stratego.View.UISettings;
@@ -15,12 +16,14 @@ import java.net.MalformedURLException;
 public class StartScreenPresenter {
 
     private Stratego model;
+    private StrategoSetup strategoSetup;
     private StartScreenView view;
     private UISettings uiSettings;
     private Stage stage;
 
-    public StartScreenPresenter(Stratego model, StartScreenView view, UISettings uiSettings, Stage stage) {
+    public StartScreenPresenter(Stratego model, StrategoSetup strategoSetup, StartScreenView view, UISettings uiSettings, Stage stage) {
         this.model = model;
+        this.strategoSetup = strategoSetup;
         this.view = view;
         this.uiSettings = uiSettings;
         this.stage = stage;
@@ -36,7 +39,7 @@ public class StartScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 HomeScreenView msView = new HomeScreenView(uiSettings);
-                HomeScreenPresenter msPresenter = new HomeScreenPresenter(model, msView, uiSettings,stage);
+                HomeScreenPresenter msPresenter = new HomeScreenPresenter(model,strategoSetup, msView, uiSettings,stage);
                 view.getScene().setRoot(msView);
                 try {
                     msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());

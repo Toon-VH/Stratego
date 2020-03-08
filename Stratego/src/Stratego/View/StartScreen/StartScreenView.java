@@ -61,7 +61,7 @@ public class StartScreenView extends BorderPane  {
     StartScreenTransition getTransition() {return trans;}
 
     private void animate() {
-        trans = new StartScreenTransition(this,3);
+        trans = new StartScreenTransition(this,1);
         trans.play();
     }
 

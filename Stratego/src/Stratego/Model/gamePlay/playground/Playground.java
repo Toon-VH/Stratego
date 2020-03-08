@@ -1,14 +1,10 @@
-package Stratego.Model.playground;
+package Stratego.Model.gamePlay.playground;
 
-
-
-import Stratego.Model.army.*;
-import Stratego.Model.player.Player;
-
+import Stratego.Model.gamePlay.army.*;
+import Stratego.Model.gamePlay.player.Player;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

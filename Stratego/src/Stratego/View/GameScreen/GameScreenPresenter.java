@@ -1,7 +1,6 @@
 package Stratego.View.GameScreen;
 
-import Stratego.Model.Stratego;
-import Stratego.View.SetupScreen.SetupScreenView;
+import Stratego.Model.gamePlay.Stratego;
 import Stratego.View.UISettings;
 import javafx.event.Event;
 import javafx.event.EventHandler;
