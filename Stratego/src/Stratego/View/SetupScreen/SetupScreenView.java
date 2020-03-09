@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
@@ -59,16 +59,28 @@ public class SetupScreenView extends BorderPane {
             for (int x = 0; x < 5; x++) {
                 for (int y = 0; y < 10; y++) {
 
-                    ImageView img;
+                    Image img;
                     if (x == 0 && (y == 2 || y == 3 || y == 6 || y == 7)) {
-                        img = new ImageView(new Image(uiSettings.getWater1().toUri().toURL().toString()));
+                        img = new Image(uiSettings.getWater1().toUri().toURL().toString());
                     } else {
-                        img = new ImageView(new Image(uiSettings.getGrassImg().toUri().toURL().toString()));
+                        img = new Image(uiSettings.getGrassImg().toUri().toURL().toString());
                     }
 
                     BorderPanePosition position = new BorderPanePosition(x - 1, y);
-                    position.setCenter(img);img.setFitWidth(65);
-                    img.setFitHeight(65);
+
+                    position.setPrefSize(75,75);
+                    ImageView imageView = new ImageView();
+                    position.setCenter(imageView);
+                    imageView.setFitHeight(75);
+                    imageView.setFitWidth(75);
+                    position.setBackground(new Background(new BackgroundImage(img,
+                            BackgroundRepeat.NO_REPEAT,
+                            BackgroundRepeat.NO_REPEAT,
+                            BackgroundPosition.CENTER,
+                            new BackgroundSize(75,75,false,false,false,false))));
+
+                    position.setBorder(new Border(new BorderStroke(Color.BLACK,
+                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                     if (x > 0) {
                         positions[counter] = position;
                         counter++;
@@ -161,6 +173,8 @@ public class SetupScreenView extends BorderPane {
 
                     BorderPaneRankType borderPane = new BorderPaneRankType();
                     borderPane.setRankType(soldierType);
+                    borderPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
                     Label name = new Label(soldierType.name());
                     borderPane.setTop(name);
@@ -215,12 +229,6 @@ public class SetupScreenView extends BorderPane {
         int number = 0;
 
 
-//        for (int i = 0; i < 4; i++) {
-//            for (int j = 0; j <10 ; j++) {
-//                RankType[i][j]
-//            }
-//
-//        }
         for (BorderPaneRankType rank : army) {
 
             Label label = (Label) rank.getBottom();
@@ -323,7 +331,7 @@ public class SetupScreenView extends BorderPane {
                                 imageView.setImage(new Image(uiSettings.getB8().toUri().toURL().toString()));
                                 break;
                         }
-                    }else imageView.setImage(new Image(uiSettings.getGrassImg().toUri().toURL().toString()));
+                    } else imageView.setImage(new Image(uiSettings.getGrassImg().toUri().toURL().toString()));
 
 
                 } catch (
