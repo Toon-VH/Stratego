@@ -33,6 +33,18 @@ public class UISettings {
     private Path bS = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_spy.png");
     private Path bF = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_flag.png");
     private Path bB = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_bomb.png");
+    private Path r10 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_10.png");
+    private Path r9 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_09.png");
+    private Path r8 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_08.png");
+    private Path r7 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_07.png");
+    private Path r6 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_06.png");
+    private Path r5 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_05.png");
+    private Path r4 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_04.png");
+    private Path r3 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_03.png");
+    private Path r2 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_02.png");
+    private Path rS = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_spy.png");
+    private Path rF = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_flag.png");
+    private Path rB = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_bomb.png");
     private Path infoImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"info-01.png");
     private Path setupFileImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"file.png");
     private Path infoTextPath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"info.txt");
@@ -135,6 +147,54 @@ public class UISettings {
 
     public Path getbB() {
         return bB;
+    }
+
+    public Path getR10() {
+        return r10;
+    }
+
+    public Path getR9() {
+        return r9;
+    }
+
+    public Path getR8() {
+        return r8;
+    }
+
+    public Path getR7() {
+        return r7;
+    }
+
+    public Path getR6() {
+        return r6;
+    }
+
+    public Path getR5() {
+        return r5;
+    }
+
+    public Path getR4() {
+        return r4;
+    }
+
+    public Path getR3() {
+        return r3;
+    }
+
+    public Path getR2() {
+        return r2;
+    }
+
+    public Path getrS() {
+        return rS;
+    }
+
+    public Path getrF() {
+        return rF;
+    }
+
+    public Path getrB() {
+        return rB;
     }
 
     public Path getInfoTextPath () {return this.infoTextPath;}
