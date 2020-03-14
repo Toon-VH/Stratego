@@ -1,5 +1,4 @@
 package Stratego.Model.gamePlay;
-
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.player.Player;
 import Stratego.Model.gamePlay.playground.Playground;

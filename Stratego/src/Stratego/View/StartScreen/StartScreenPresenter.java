@@ -3,6 +3,8 @@ package Stratego.View.StartScreen;
 
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gameSetup.StrategoSetup;
+import Stratego.View.GameScreen.GameScreenPresenter;
+import Stratego.View.GameScreen.GameScreenView;
 import Stratego.View.HomeScreen.HomeScreenPresenter;
 import Stratego.View.HomeScreen.HomeScreenView;
 import Stratego.View.UISettings;

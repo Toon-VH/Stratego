@@ -1,28 +1,30 @@
 package Stratego.View.GameScreen;
 
+import Stratego.Model.gamePlay.army.ArmyColor;
+import Stratego.Model.gamePlay.army.RankType;
+import Stratego.View.SetupScreen.BorderPaneRankType;
 import Stratego.View.UISettings;
+import Stratego.View.common.BaseView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 
 
-public class GameScreenView extends BorderPane {
+public class GameScreenView extends BaseView {
 
     // private Node attributen (controls)
 
     private Button ready;
-    private UISettings uiSettings;
+
 
     public GameScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -37,17 +39,26 @@ public class GameScreenView extends BorderPane {
 
     private void layoutNodes() {
         ImageView fileImg = null;
-        BorderPane top = new BorderPane();
-        Label title = new Label("Red its youre turn");
+        BorderPane left = new BorderPane();
+        BorderPane right = new BorderPane();
+        BorderPane rightTop = new BorderPane();
+        BorderPane leftTop = new BorderPane();
         GridPane gridPlace = new GridPane();
-        gridPlace.setHgap(15);
-        gridPlace.setVgap(15);
+        Button redButton = new Button("Ready");
+        Button blueButton = new Button("Ready");
+        Label red = new Label("100");
+        Label blue = new Label("100");
+        gridPlace.setHgap(7);
+        gridPlace.setVgap(7);
 
         ImageView imgInfo = null;
+        ImageView imgSave = null;
+
         try {
+            imgSave = new ImageView(new Image(uiSettings.getSaveImg().toUri().toURL().toString()));
             imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
-            ;
-            top.setRight(imgInfo);
+            imgSave.setFitWidth(70);
+            imgSave.setFitHeight(70);
             imgInfo.setFitWidth(70);
             imgInfo.setFitHeight(70);
         } catch (MalformedURLException e) {
@@ -72,21 +83,134 @@ public class GameScreenView extends BorderPane {
                 }
             }
         }
+        right.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        left.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        rightTop.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        leftTop.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        red.setFont(Font.font("Cambria", 30));
+        blue.setFont(Font.font("Cambria", 30));
 
-        setTop(top);
-        top.setLeft(fileImg);
-        top.setRight(imgInfo);
-        top.setCenter(title);
+        setRight(right);
+        setLeft(left);
+
+        drawDeadArmy(left,ArmyColor.Blue);
+        drawDeadArmy(right,ArmyColor.Red);
+
+        right.setTop(rightTop);
+        rightTop.setRight(imgInfo);
+        rightTop.setLeft(red);
+        right.setBottom(redButton);
+
+        left.setTop(leftTop);
+        leftTop.setRight(blue);
+        leftTop.setLeft(imgSave);
+        left.setBottom(blueButton);
+
         setCenter(gridPlace);
-        setMargin(gridPlace, new Insets(100, 0, 0, 0));
-        title.setFont(Font.font("Cambria", 48));
-        setMargin(title, new Insets(100, 0, 0, 0));
-        title.setAlignment(Pos.BASELINE_CENTER);
         gridPlace.setAlignment(Pos.BASELINE_CENTER);
     }
     // implementatie van de nodige
     // package-private Getters
 
+    private BorderPane[] drawDeadArmy(BorderPane pane, ArmyColor armyColor) {
+
+        BorderPane[] deadArmy = new BorderPane[12];
+        GridPane gridDead = new GridPane();
+        RankType soldierType = null;
+        ImageView img = new ImageView();
+        String number = "0";
+        int counter = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 2; j++) {
+
+                switch (i) {
+                    case 0:
+                        switch (j) {
+                            case 0:
+                                soldierType = RankType.Marshal;
+                                break;
+                            case 1:
+                                soldierType = RankType.General;
+                                break;
+                        }
+                    case 1:
+                        switch (j) {
+                            case 0:
+                                soldierType = RankType.Colonel;
+                                break;
+                            case 1:
+                                soldierType = RankType.Major;
+                                break;
+                        }
+                    case 2:
+                        switch (j) {
+                            case 0:
+                                soldierType = RankType.Captain;
+                                break;
+                            case 1:
+                                soldierType = RankType.Lieutenant;
+                                break;
+                        }
+                    case 3:
+                        switch (j) {
+                            case 0:
+                                soldierType = RankType.Sergeant;
+                                break;
+                            case 1:
+                                soldierType = RankType.Minor;
+                                break;
+                        }
+                    case 4:
+                        switch (j) {
+
+                            case 0:
+                                soldierType = RankType.Scout;
+                                break;
+                            case 1:
+                                soldierType = RankType.Spy;
+                                break;
+                        }
+                    case 5:
+                        switch (j) {
+                            case 0:
+                                soldierType = RankType.Flag;
+                                break;
+                            case 1:
+                                soldierType = RankType.Bomb;
+                                break;
+                        }
+                }
+                img = new ImageView(getArmyImage(soldierType, armyColor));
+
+                BorderPaneRankType borderPane = new BorderPaneRankType();
+                borderPane.setRankType(soldierType);
+                borderPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+                Label name = new Label(soldierType.name());
+                borderPane.setTop(name);
+
+                Label count = new Label(number);
+                borderPane.setBottom(count);
+
+                borderPane.setCenter(img);
+                img.setFitWidth(70);
+                img.setFitHeight(70);
+                gridDead.add(borderPane, j, i);
+
+                deadArmy[counter] = borderPane;
+                counter++;
+
+
+            }
+        }
+        pane.setCenter(gridDead);
+        return deadArmy;
+    }
 
     public Button getReady() {
         return ready;

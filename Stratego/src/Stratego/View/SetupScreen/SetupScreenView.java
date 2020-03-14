@@ -1,8 +1,10 @@
 package Stratego.View.SetupScreen;
 
+import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.RankType;
 import Stratego.Model.gameSetup.AvailableSoldiers;
 import Stratego.View.UISettings;
+import Stratego.View.common.BaseView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,19 +16,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
+import java.nio.file.Path;
 
-public class SetupScreenView extends BorderPane {
+public class SetupScreenView extends BaseView {
 
     // private Node attributen (controls)
-
     private Button ready;
-    private UISettings uiSettings;
     private ImageView imgInfo;
     private ImageView fileImg;
     private BorderPaneRankType[] army;
     private BorderPanePosition[] positions;
 
     public SetupScreenView(UISettings uiSettings) {
+        this.armyC = ArmyColor.Blue;
         this.army = new BorderPaneRankType[12];
         this.positions = new BorderPanePosition[40];
         this.uiSettings = uiSettings;
@@ -37,11 +39,17 @@ public class SetupScreenView extends BorderPane {
     private void initialiseNodes() {
         // Initialisatie van de Nodes
         this.ready = new Button("Ready");
-        this.imgInfo = null;
+
+        try {
+            this.imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
+            this.fileImg = new ImageView(new Image(uiSettings.getSetupFileImg().toUri().toURL().toString()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void layoutNodes() {
-        ImageView fileImg = null;
         BorderPane top = new BorderPane();
         Label title = new Label("Setup your Army");
         GridPane gridPlace = new GridPane();
@@ -50,10 +58,6 @@ public class SetupScreenView extends BorderPane {
 
 
         try {
-
-            imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
-            fileImg = new ImageView(new Image(uiSettings.getSetupFileImg().toUri().toURL().toString()));
-
             int counter = 0;
 
             for (int x = 0; x < 5; x++) {
@@ -68,16 +72,16 @@ public class SetupScreenView extends BorderPane {
 
                     BorderPanePosition position = new BorderPanePosition(x - 1, y);
 
-                    position.setPrefSize(75,75);
+                    position.setPrefSize(65, 65);
                     ImageView imageView = new ImageView();
                     position.setCenter(imageView);
-                    imageView.setFitHeight(75);
-                    imageView.setFitWidth(75);
+                    imageView.setFitHeight(65);
+                    imageView.setFitWidth(65);
                     position.setBackground(new Background(new BackgroundImage(img,
                             BackgroundRepeat.NO_REPEAT,
                             BackgroundRepeat.NO_REPEAT,
                             BackgroundPosition.CENTER,
-                            new BackgroundSize(75,75,false,false,false,false))));
+                            new BackgroundSize(65, 65, false, false, false, false))));
 
                     position.setBorder(new Border(new BorderStroke(Color.BLACK,
                             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -92,45 +96,37 @@ public class SetupScreenView extends BorderPane {
 
 
             RankType soldierType = null;
-            ImageView img = null;
+            ImageView img = new ImageView();
             String number = "0";
             counter = 0;
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 6; j++) {
-
-                    img = new ImageView(new Image(uiSettings.getGeneral().toUri().toURL().toString()));
 
                     switch (i) {
                         case 0:
                             switch (j) {
                                 case 0:
                                     soldierType = RankType.Marshal;
-                                    img = new ImageView(new Image(uiSettings.getB10().toUri().toURL().toString()));
                                     number = "1";
                                     break;
                                 case 1:
                                     soldierType = RankType.General;
-                                    img = new ImageView(new Image(uiSettings.getB9().toUri().toURL().toString()));
                                     number = "1";
                                     break;
                                 case 2:
                                     soldierType = RankType.Colonel;
-                                    img = new ImageView(new Image(uiSettings.getB8().toUri().toURL().toString()));
                                     number = "2";
                                     break;
                                 case 3:
                                     soldierType = RankType.Major;
-                                    img = new ImageView(new Image(uiSettings.getB7().toUri().toURL().toString()));
                                     number = "3";
                                     break;
                                 case 4:
                                     soldierType = RankType.Captain;
-                                    img = new ImageView(new Image(uiSettings.getB6().toUri().toURL().toString()));
                                     number = "4";
                                     break;
                                 case 5:
                                     soldierType = RankType.Lieutenant;
-                                    img = new ImageView(new Image(uiSettings.getB5().toUri().toURL().toString()));
                                     number = "4";
                                     break;
                             }
@@ -139,37 +135,33 @@ public class SetupScreenView extends BorderPane {
                             switch (j) {
                                 case 0:
                                     soldierType = RankType.Sergeant;
-                                    img = new ImageView(new Image(uiSettings.getB4().toUri().toURL().toString()));
                                     number = "4";
                                     break;
                                 case 1:
                                     soldierType = RankType.Minor;
-                                    img = new ImageView(new Image(uiSettings.getB3().toUri().toURL().toString()));
                                     number = "5";
                                     break;
                                 case 2:
                                     soldierType = RankType.Scout;
-                                    img = new ImageView(new Image(uiSettings.getB2().toUri().toURL().toString()));
                                     number = "8";
                                     break;
                                 case 3:
                                     soldierType = RankType.Spy;
-                                    img = new ImageView(new Image(uiSettings.getbS().toUri().toURL().toString()));
                                     number = "1";
                                     break;
                                 case 4:
                                     soldierType = RankType.Flag;
-                                    img = new ImageView(new Image(uiSettings.getbF().toUri().toURL().toString()));
                                     number = "1";
                                     break;
                                 case 5:
                                     soldierType = RankType.Bomb;
-                                    img = new ImageView(new Image(uiSettings.getbB().toUri().toURL().toString()));
                                     number = "6";
                                     break;
                             }
                             break;
                     }
+
+                    img = new ImageView(getArmyImage(soldierType,armyC));
 
                     BorderPaneRankType borderPane = new BorderPaneRankType();
                     borderPane.setRankType(soldierType);
@@ -225,13 +217,17 @@ public class SetupScreenView extends BorderPane {
     // implementatie van de nodige
     // package-private Getters
 
-    public void refresh(AvailableSoldiers availableSoldiers, RankType[][] setup) {
+    public void refresh(AvailableSoldiers availableSoldiers, RankType[][] setup, ArmyColor armyColor) {
         int number = 0;
 
+        this.armyC = armyColor;
 
         for (BorderPaneRankType rank : army) {
 
             Label label = (Label) rank.getBottom();
+
+            ImageView image = (ImageView) rank.getCenter();
+            image.setImage(getArmyImage(rank.getRankType(),armyC));
 
             switch (rank.getRankType()) {
                 case Sergeant:
@@ -288,60 +284,18 @@ public class SetupScreenView extends BorderPane {
             for (BorderPanePosition position : positions) {
 
                 RankType rankType = setup[position.getX()][position.getY()];
+                ImageView imageView = (ImageView) position.getCenter();
 
-                try {
-                    ImageView imageView = (ImageView) position.getCenter();
-                    if (rankType != null
-                    ) {
-                        switch (rankType) {
-                            case Sergeant:
-                                imageView.setImage(new Image(uiSettings.getB4().toUri().toURL().toString()));
-                                break;
-                            case General:
-                                imageView.setImage(new Image(uiSettings.getB9().toUri().toURL().toString()));
-                                break;
-                            case Captain:
-                                imageView.setImage(new Image(uiSettings.getB6().toUri().toURL().toString()));
-                                break;
-                            case Major:
-                                imageView.setImage(new Image(uiSettings.getB7().toUri().toURL().toString()));
-                                break;
-                            case Marshal:
-                                imageView.setImage(new Image(uiSettings.getB10().toUri().toURL().toString()));
-                                break;
-                            case Lieutenant:
-                                imageView.setImage(new Image(uiSettings.getB5().toUri().toURL().toString()));
-                                break;
-                            case Minor:
-                                imageView.setImage(new Image(uiSettings.getB3().toUri().toURL().toString()));
-                                break;
-                            case Scout:
-                                imageView.setImage(new Image(uiSettings.getB2().toUri().toURL().toString()));
-                                break;
-                            case Spy:
-                                imageView.setImage(new Image(uiSettings.getbS().toUri().toURL().toString()));
-                                break;
-                            case Bomb:
-                                imageView.setImage(new Image(uiSettings.getbB().toUri().toURL().toString()));
-                                break;
-                            case Flag:
-                                imageView.setImage(new Image(uiSettings.getbF().toUri().toURL().toString()));
-                                break;
-                            case Colonel:
-                                imageView.setImage(new Image(uiSettings.getB8().toUri().toURL().toString()));
-                                break;
-                        }
-                    } else imageView.setImage(new Image(uiSettings.getGrassImg().toUri().toURL().toString()));
+                if (rankType != null) {
+                    imageView.setImage(getArmyImage(rankType,armyC));
+                } else imageView.setImage(null);
 
-
-                } catch (
-                        MalformedURLException e) {
-                    e.printStackTrace();
-                }
             }
-        }
 
+        }
     }
+
+
 
     public Button getReady() {
         return ready;
@@ -353,6 +307,14 @@ public class SetupScreenView extends BorderPane {
 
     public BorderPanePosition[] getPositions() {
         return positions;
+    }
+
+    public ImageView getImgInfo() {
+        return imgInfo;
+    }
+
+    public ImageView getFileImg() {
+        return fileImg;
     }
 }
 

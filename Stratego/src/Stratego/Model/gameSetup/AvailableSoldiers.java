@@ -19,46 +19,46 @@ public class AvailableSoldiers {
 
     public void remove(RankType soldierType) {
 
-        if (soldierType != null){
+        if (soldierType != null) {
 
-        switch (soldierType) {
-            case Flag:
-                flag--;
-                break;
-            case Bomb:
-                bomb--;
-                break;
-            case Spy:
-                spy--;
-                break;
-            case Scout:
-                scout--;
-                break;
-            case Minor:
-                minor--;
-                break;
-            case Lieutenant:
-                lieutenant--;
-                break;
-            case Marshal:
-                marshal--;
-                break;
-            case Major:
-                major--;
-                break;
-            case Captain:
-                captain--;
-                break;
-            case Colonel:
-                colonel--;
-                break;
-            case General:
-                general--;
-                break;
-            case Sergeant:
-                sergeant--;
-                break;
-        }
+            switch (soldierType) {
+                case Flag:
+                    flag--;
+                    break;
+                case Bomb:
+                    bomb--;
+                    break;
+                case Spy:
+                    spy--;
+                    break;
+                case Scout:
+                    scout--;
+                    break;
+                case Minor:
+                    minor--;
+                    break;
+                case Lieutenant:
+                    lieutenant--;
+                    break;
+                case Marshal:
+                    marshal--;
+                    break;
+                case Major:
+                    major--;
+                    break;
+                case Captain:
+                    captain--;
+                    break;
+                case Colonel:
+                    colonel--;
+                    break;
+                case General:
+                    general--;
+                    break;
+                case Sergeant:
+                    sergeant--;
+                    break;
+            }
         }
     }
 

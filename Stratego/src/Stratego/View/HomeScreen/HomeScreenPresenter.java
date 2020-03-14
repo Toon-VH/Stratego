@@ -1,6 +1,7 @@
 package Stratego.View.HomeScreen;
 
 import Stratego.Model.gamePlay.Stratego;
+import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.SetupScreen.SetupScreenPresenter;
 import Stratego.View.SetupScreen.SetupScreenView;
@@ -10,9 +11,13 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 public class HomeScreenPresenter {
@@ -34,6 +39,17 @@ public class HomeScreenPresenter {
     }
 
     private void addEventHandlers() {
+        view.getImgInfo().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    File myFile = new File(uiSettings.getInfoTextPath().toString());
+                    Desktop.getDesktop().open(myFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         view.getClassic_battle().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
