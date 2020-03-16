@@ -1,7 +1,6 @@
 package Stratego.View.HomeScreen;
 
 import Stratego.Model.gamePlay.Stratego;
-import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.SetupScreen.SetupScreenPresenter;
 import Stratego.View.SetupScreen.SetupScreenView;
@@ -14,7 +13,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

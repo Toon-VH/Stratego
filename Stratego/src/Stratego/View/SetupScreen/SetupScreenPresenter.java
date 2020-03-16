@@ -3,7 +3,6 @@ package Stratego.View.SetupScreen;
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.RankType;
-import Stratego.Model.gameSetup.AvailableSoldiers;
 import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.GameScreen.GameScreenPresenter;
 import Stratego.View.GameScreen.GameScreenView;
@@ -17,12 +16,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 
 public class SetupScreenPresenter {
 
@@ -33,7 +30,6 @@ public class SetupScreenPresenter {
     private Stage stage;
     private RankType selected;
     private ArmyColor armyC;
-
 
     public SetupScreenPresenter(Stratego strategoModel, StrategoSetup strategoSetup, SetupScreenView view, UISettings uiSettings, Stage stage) {
         this.armyC = ArmyColor.Blue;
@@ -135,7 +131,6 @@ public class SetupScreenPresenter {
     private void updateView() {
         // Vult de view met data uit model
         view.refresh(strategoSetup.getAvailableSoldiers(), strategoSetup.getSetup(), armyC);
-
     }
 
     public void addWindowEventHandlers() {

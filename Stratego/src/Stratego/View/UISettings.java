@@ -1,6 +1,7 @@
 package Stratego.View;
 
 import javafx.stage.Screen;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,76 +15,104 @@ public class UISettings {
     private String ApplicationName;
     private String homeDir;
     private String defaultCss = "themes02.css";
-    private Path styleSheetPath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"stylesheets"+FILE_SEPARATOR+defaultCss);
-    private Path AboutImagePath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"AboutImage.png");
-    private Path applicationIconPath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"Logo.png");
-    private Path startScreenImagePath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"StartScreenImage.png");
-    private Path General = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"GeneraalB.png");
-    private Path grassImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"grass1.png");
-    private Path water1 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"water1.png");
-    private Path b10 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_10.png");
-    private Path b9 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_09.png");
-    private Path b8 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_08.png");
-    private Path b7 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_07.png");
-    private Path b6 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_06.png");
-    private Path b5 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_05.png");
-    private Path b4 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_04.png");
-    private Path b3 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_03.png");
-    private Path b2 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_02.png");
-    private Path bS = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_spy.png");
-    private Path bF = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_flag.png");
-    private Path bB = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"blue_bomb.png");
-    private Path r10 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_10.png");
-    private Path r9 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_09.png");
-    private Path r8 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_08.png");
-    private Path r7 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_07.png");
-    private Path r6 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_06.png");
-    private Path r5 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_05.png");
-    private Path r4 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_04.png");
-    private Path r3 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_03.png");
-    private Path r2 = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_02.png");
-    private Path rS = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_spy.png");
-    private Path rF = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_flag.png");
-    private Path rB = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"red_bomb.png");
-    private Path redS = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"setups"+FILE_SEPARATOR+"redS.txt");
-    private Path blueS = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"setups"+FILE_SEPARATOR+"blueS.txt");
-    private Path saveImg  = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"save.png");
-    private Path infoImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"info-01.png");
-    private Path setupFileImg = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"images"+FILE_SEPARATOR+"file.png");
-    private Path infoTextPath = Paths.get("Stratego"+FILE_SEPARATOR+"resources"+FILE_SEPARATOR+"other"+FILE_SEPARATOR+"regels.pdf");
+    private Path styleSheetPath = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "stylesheets" + FILE_SEPARATOR + defaultCss);
+    private Path AboutImagePath = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "AboutImage.png");
+    private Path applicationIconPath = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "Logo.png");
+    private Path startScreenImagePath = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "StartScreenImage.png");
+    private Path grassImg = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "grass1.png");
+    private Path water1 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "water1.png");
+    private Path b10 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueMar.png");
+    private Path b9 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueGen.png");
+    private Path b8 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueCol.png");
+    private Path b7 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueMaj.png");
+    private Path b6 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueCap.png");
+    private Path b5 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueLie.png");
+    private Path b4 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueSerg.png");
+    private Path b3 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueMin.png");
+    private Path b2 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueSco.png");
+    private Path bS = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueSpy.png");
+    private Path bF = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueFla.png");
+    private Path bB = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueBom.png");
+    private Path r10 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redMar.png");
+    private Path r9 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redGen.png");
+    private Path r8 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redCol.png");
+    private Path r7 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redMaj.png");
+    private Path r6 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redCap.png");
+    private Path r5 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redLie.png");
+    private Path r4 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redSerg.png");
+    private Path r3 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redMin.png");
+    private Path r2 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redSco.png");
+    private Path rS = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redSpy.png");
+    private Path rF = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redFla.png");
+    private Path rB = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "redBom.png");
+
+    private Path bBack = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blue_back.png");
+    private Path rBack = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "red_back.png");
 
 
+
+
+    private Path redS = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "setups" + FILE_SEPARATOR + "redS.txt");
+    private Path blueS = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "setups" + FILE_SEPARATOR + "blueS.txt");
+    private Path saveImg = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "save.png");
+    private Path infoImg = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "info-01.png");
+    private Path setupFileImg = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "file.png");
+    private Path infoTextPath = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "other" + FILE_SEPARATOR + "regels.pdf");
 
 
     public UISettings() {
-        this.resX= (int) Screen.getPrimary().getVisualBounds().getWidth();
+        this.resX = (int) Screen.getPrimary().getVisualBounds().getWidth();
         this.resY = (int) Screen.getPrimary().getVisualBounds().getHeight();
-        this.insetsMargin = this.getLowestRes()/100;
+        this.insetsMargin = this.getLowestRes() / 100;
         this.homeDir = System.getProperties().getProperty("user.dir");
         this.ApplicationName = "Stratego";
-    };
+    }
 
-    public int getResX () {return this.resX;}
+    ;
 
-    public int getResY () {return this.resY;}
+    public int getResX() {
+        return this.resX;
+    }
 
-    public int getInsetsMargin () {return this.insetsMargin;}
+    public int getResY() {
+        return this.resY;
+    }
 
-    public int getLowestRes () {return (resX>resY?resX:resY);}
+    public int getInsetsMargin() {
+        return this.insetsMargin;
+    }
 
-    public boolean styleSheetAvailable (){return Files.exists(styleSheetPath);}
+    public int getLowestRes() {
+        return (resX > resY ? resX : resY);
+    }
 
-    public Path getStyleSheetPath () {return this.styleSheetPath;}
+    public boolean styleSheetAvailable() {
+        return Files.exists(styleSheetPath);
+    }
 
-        public void setStyleSheetPath (Path styleSheetPath) {this.styleSheetPath = styleSheetPath;}
+    public Path getStyleSheetPath() {
+        return this.styleSheetPath;
+    }
 
-    public String getHomeDir () {return this.homeDir;}
+    public void setStyleSheetPath(Path styleSheetPath) {
+        this.styleSheetPath = styleSheetPath;
+    }
 
-    public Path getApplicationIconPath () {return this.applicationIconPath;}
+    public String getHomeDir() {
+        return this.homeDir;
+    }
 
-    public Path getStartScreenImagePath () {return this.startScreenImagePath;}
+    public Path getApplicationIconPath() {
+        return this.applicationIconPath;
+    }
 
-    public Path getAboutImagePath () {return this.AboutImagePath;}
+    public Path getStartScreenImagePath() {
+        return this.startScreenImagePath;
+    }
+
+    public Path getAboutImagePath() {
+        return this.AboutImagePath;
+    }
 
     public Path getSetupFileImg() {
         return setupFileImg;
@@ -91,10 +120,6 @@ public class UISettings {
 
     public Path getGrassImg() {
         return grassImg;
-    }
-
-    public Path getGeneral() {
-        return General;
     }
 
     public Path getWater1() {
@@ -201,6 +226,7 @@ public class UISettings {
         return rB;
     }
 
+
     public Path getSaveImg() {
         return saveImg;
     }
@@ -213,8 +239,20 @@ public class UISettings {
         return blueS;
     }
 
-    public Path getInfoTextPath () {return this.infoTextPath;}
+    public Path getbBack() {
+        return bBack;
+    }
 
-    public String getApplicationName () {return this.ApplicationName;}
+    public Path getrBack() {
+        return rBack;
+    }
+
+    public Path getInfoTextPath() {
+        return this.infoTextPath;
+    }
+
+    public String getApplicationName() {
+        return this.ApplicationName;
+    }
 
 }

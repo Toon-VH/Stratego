@@ -1,4 +1,4 @@
-package Stratego.View.HomeScreen;
+package Stratego.View.GameScreen;
 
 public enum Turn {
     Blue,Red,None

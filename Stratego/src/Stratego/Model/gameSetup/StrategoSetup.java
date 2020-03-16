@@ -1,6 +1,5 @@
 package Stratego.Model.gameSetup;
 
-
 import Stratego.Model.gamePlay.army.RankType;
 
 import java.io.File;
@@ -15,10 +14,8 @@ public class StrategoSetup {
 
     RankType[][] setup;
 
-
     public StrategoSetup() {
-        this.setup = new RankType[4][10];
-
+        this.setup = new RankType[10][4];
     }
 
     public void SetSoldier(RankType rankType, int x, int y) {
@@ -57,10 +54,10 @@ public class StrategoSetup {
 
                 for (String s : l.split(",")) {
                     setup[indexX][indexY] = stringToRankType(s);
-                    indexY++;
+                    indexX++;
                 }
-                indexY = 0;
-                indexX++;
+                indexX = 0;
+                indexY++;
 
             }
         } catch (IOException exception) {
@@ -69,12 +66,7 @@ public class StrategoSetup {
 
     }
 
-    private void saveConfiguration() {
-
-    }
-
     private RankType stringToRankType(String rank) {
-
         RankType rankType = null;
 
         switch (rank.toLowerCase()) {
@@ -115,11 +107,10 @@ public class StrategoSetup {
                 rankType = RankType.Flag;
         }
         return rankType;
-
     }
 
     public void clearSetup() {
-        setup = new RankType[4][10];
+        setup = new RankType[10][4];
     }
 
     public boolean allSet() {
@@ -138,13 +129,12 @@ public class StrategoSetup {
     }
 
     private String createOutPut() {
-
         String result = "";
 
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 10; x++) {
+                RankType rank = setup[x][y];
 
-        for (RankType[] rankTypes : setup) {
-            int collumCounter = 0;
-            for (RankType rank : rankTypes) {
                 switch (rank) {
                     case Marshal:
                         result += "10";
@@ -182,16 +172,14 @@ public class StrategoSetup {
                     case Flag:
                         result += "F";
                 }
-                collumCounter++;
-                if (collumCounter < 10) result += ",";
+                if (x < 9) result += ",";
                 else result += "\n";
 
             }
-
         }
-
         return result;
     }
+
 
     public RankType[][] getSetup() {
         return setup;

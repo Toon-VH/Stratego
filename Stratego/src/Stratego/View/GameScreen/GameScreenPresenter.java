@@ -1,6 +1,12 @@
 package Stratego.View.GameScreen;
 
 import Stratego.Model.gamePlay.Stratego;
+import Stratego.Model.gamePlay.army.Army;
+import Stratego.Model.gamePlay.army.ArmyColor;
+import Stratego.Model.gamePlay.army.Pawn;
+import Stratego.Model.gamePlay.army.RankType;
+import Stratego.Model.gamePlay.playground.Location;
+import Stratego.Model.gamePlay.playground.PawnLocation;
 import Stratego.View.UISettings;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -17,12 +23,14 @@ public class GameScreenPresenter {
     private Stage stage;
 
 
-
-    public GameScreenPresenter(Stratego model, GameScreenView view, UISettings uiSettings,Stage stage) {
+    public GameScreenPresenter(Stratego model, GameScreenView view, UISettings uiSettings, Stage stage) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
         this.stage = stage;
+        model.loadArmySetup(ArmyColor.Red, uiSettings.getRedS());
+        model.loadArmySetup(ArmyColor.Blue, uiSettings.getBlueS());
+        updateView();
         this.addEventHandlers();
         this.updateView();
     }
@@ -36,6 +44,27 @@ public class GameScreenPresenter {
 
     private void updateView() {
         // Vult de view met data uit model
+        ArmyRank[][] setup = new ArmyRank[10][10];
+        Location[][] locations = model.getPlayground().getLocations();
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                if (locations[x][y] instanceof PawnLocation) {
+                    PawnLocation pawnLocation = (PawnLocation) locations[x][y];
+                    if (pawnLocation != null) {
+                        if (pawnLocation.getStandOn() != null) {
+                            Pawn pawn = pawnLocation.getStandOn();
+                            RankType rankType = pawn.getRank();
+                            ArmyColor armyColor = pawn.getParent().getColor();
+                            setup[x][y] = new ArmyRank(rankType, armyColor);
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+        view.refresh(Turn.Red,setup);
     }
 
     public void addWindowEventHandlers() {
@@ -46,9 +75,13 @@ public class GameScreenPresenter {
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { handleCloseEvent(event); }});
+            public void handle(WindowEvent event) {
+                handleCloseEvent(event);
+            }
+        });
     }
-    private void handleCloseEvent(Event event){
+
+    private void handleCloseEvent(Event event) {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("You're closing the application.");
         stopWindow.setContentText("Are you sure? Unsaved data may be lost.");

@@ -1,5 +1,7 @@
 package Stratego.View.HomeScreen;
 
+import Stratego.View.GameScreen.ArmyRank;
+import Stratego.View.GameScreen.Turn;
 import Stratego.View.UISettings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -64,7 +66,8 @@ public class HomeScreenView extends BorderPane {
 
 
     }
-    // implementatie van de nodige
+
+
 
     public Button getSingle_player() {
         return single_player;

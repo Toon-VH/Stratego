@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
-import java.nio.file.Path;
 
 public class SetupScreenView extends BaseView {
 
@@ -39,38 +38,37 @@ public class SetupScreenView extends BaseView {
     private void initialiseNodes() {
         // Initialisatie van de Nodes
         this.ready = new Button("Ready");
-
         try {
             this.imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
             this.fileImg = new ImageView(new Image(uiSettings.getSetupFileImg().toUri().toURL().toString()));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
     }
 
     private void layoutNodes() {
-        BorderPane top = new BorderPane();
         Label title = new Label("Setup your Army");
         GridPane gridPlace = new GridPane();
         GridPane gridTake = new GridPane();
-        BorderPane bottem = new BorderPane();
-
+        BorderPane center = new BorderPane();
+        BorderPane right = new BorderPane();
+        BorderPane left = new BorderPane();
 
         try {
             int counter = 0;
 
-            for (int x = 0; x < 5; x++) {
-                for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                for (int y = 0; y < 5; y++) {
 
                     Image img;
-                    if (x == 0 && (y == 2 || y == 3 || y == 6 || y == 7)) {
+                    if (y == 0 && (x == 2 || x == 3 || x == 6 || x == 7)) {
                         img = new Image(uiSettings.getWater1().toUri().toURL().toString());
                     } else {
                         img = new Image(uiSettings.getGrassImg().toUri().toURL().toString());
                     }
 
-                    BorderPanePosition position = new BorderPanePosition(x - 1, y);
+
+                    BorderPanePosition position = new BorderPanePosition(x, y - 1);
 
                     position.setPrefSize(65, 65);
                     ImageView imageView = new ImageView();
@@ -85,26 +83,26 @@ public class SetupScreenView extends BaseView {
 
                     position.setBorder(new Border(new BorderStroke(Color.BLACK,
                             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-                    if (x > 0) {
+                    if (y > 0) {
                         positions[counter] = position;
                         counter++;
+
                     }
-                    gridPlace.add(position, y, x);
+                    gridPlace.add(position, x, y);
 
                 }
             }
-
 
             RankType soldierType = null;
             ImageView img = new ImageView();
             String number = "0";
             counter = 0;
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 6; j++) {
+            for (int x = 0; x < 6; x++) {
+                for (int y = 0; y < 2; y++) {
 
-                    switch (i) {
+                    switch (y) {
                         case 0:
-                            switch (j) {
+                            switch (x) {
                                 case 0:
                                     soldierType = RankType.Marshal;
                                     number = "1";
@@ -132,7 +130,7 @@ public class SetupScreenView extends BaseView {
                             }
                             break;
                         case 1:
-                            switch (j) {
+                            switch (x) {
                                 case 0:
                                     soldierType = RankType.Sergeant;
                                     number = "4";
@@ -161,7 +159,7 @@ public class SetupScreenView extends BaseView {
                             break;
                     }
 
-                    img = new ImageView(getArmyImage(soldierType,armyC));
+                    img = new ImageView(getArmyImage(soldierType, armyC));
 
                     BorderPaneRankType borderPane = new BorderPaneRankType();
                     borderPane.setRankType(soldierType);
@@ -169,15 +167,20 @@ public class SetupScreenView extends BaseView {
                             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
                     Label name = new Label(soldierType.name());
-                    borderPane.setTop(name);
-
                     Label count = new Label(number);
-                    borderPane.setBottom(count);
 
+                    borderPane.setTop(name);
+                    borderPane.setBottom(count);
                     borderPane.setCenter(img);
+                    gridTake.add(borderPane, x, y);
+
+                    count.setMaxWidth(Double.MAX_VALUE);
+                    count.setAlignment(Pos.CENTER);
+                    name.setMaxWidth(Double.MAX_VALUE);
+                    name.setAlignment(Pos.CENTER);
+
                     img.setFitWidth(70);
                     img.setFitHeight(70);
-                    gridTake.add(borderPane, j, i);
 
                     army[counter] = borderPane;
                     counter++;
@@ -194,20 +197,20 @@ public class SetupScreenView extends BaseView {
         fileImg.setPreserveRatio(true);
         fileImg.setFitWidth(70);
         fileImg.setSmooth(true);
-        this.setTop(fileImg);
-        top.setRight(imgInfo);
-        setTop(top);
-        top.setLeft(fileImg);
-        top.setRight(imgInfo);
-        top.setCenter(title);
-        setCenter(gridPlace);
-        setBottom(bottem);
-        bottem.setCenter(gridTake);
-        bottem.setRight(ready);
+        setRight(right);
+        setLeft(left);
+        right.setTop(imgInfo);
+        left.setTop(fileImg);
+        setCenter(center);
+        center.setTop(title);
+        center.setCenter(gridPlace);
+        setBottom(gridTake);
+        right.setBottom(ready);
         title.setFont(Font.font("Cambria", 40));
         setMargin(gridPlace, new Insets(50, 0, 0, 0));
         setMargin(title, new Insets(50, 0, 0, 0));
-        title.setAlignment(Pos.BASELINE_CENTER);
+        title.setMaxWidth(Double.MAX_VALUE);
+        title.setAlignment(Pos.CENTER);
         gridPlace.setAlignment(Pos.BASELINE_CENTER);
         gridTake.setAlignment(Pos.BASELINE_CENTER);
         gridTake.setHgap(20);
@@ -227,7 +230,7 @@ public class SetupScreenView extends BaseView {
             Label label = (Label) rank.getBottom();
 
             ImageView image = (ImageView) rank.getCenter();
-            image.setImage(getArmyImage(rank.getRankType(),armyC));
+            image.setImage(getArmyImage(rank.getRankType(), armyC));
 
             switch (rank.getRankType()) {
                 case Sergeant:
@@ -278,24 +281,18 @@ public class SetupScreenView extends BaseView {
                     number = availableSoldiers.getColonel();
                     label.setText(Integer.toString(number));
                     break;
-
             }
 
             for (BorderPanePosition position : positions) {
-
                 RankType rankType = setup[position.getX()][position.getY()];
                 ImageView imageView = (ImageView) position.getCenter();
 
                 if (rankType != null) {
-                    imageView.setImage(getArmyImage(rankType,armyC));
+                    imageView.setImage(getArmyImage(rankType, armyC));
                 } else imageView.setImage(null);
-
             }
-
         }
     }
-
-
 
     public Button getReady() {
         return ready;
