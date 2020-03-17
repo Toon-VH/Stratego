@@ -82,7 +82,7 @@ public class SetupScreenView extends BaseView {
                             new BackgroundSize(65, 65, false, false, false, false))));
 
                     position.setBorder(new Border(new BorderStroke(Color.BLACK,
-                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
                     if (y > 0) {
                         positions[counter] = position;
                         counter++;
@@ -164,7 +164,7 @@ public class SetupScreenView extends BaseView {
                     BorderPaneRankType borderPane = new BorderPaneRankType();
                     borderPane.setRankType(soldierType);
                     borderPane.setBorder(new Border(new BorderStroke(Color.BLACK,
-                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
 
                     Label name = new Label(soldierType.name());
                     Label count = new Label(number);
@@ -204,11 +204,13 @@ public class SetupScreenView extends BaseView {
         setCenter(center);
         center.setTop(title);
         center.setCenter(gridPlace);
-        setBottom(gridTake);
+        center.setBottom(gridTake);
         right.setBottom(ready);
-        title.setFont(Font.font("Cambria", 40));
+        title.setFont(Font.font("Cambria", 32));
         setMargin(gridPlace, new Insets(50, 0, 0, 0));
         setMargin(title, new Insets(50, 0, 0, 0));
+        ready.setPrefSize(100,100);
+        ready.setAlignment(Pos.CENTER);
         title.setMaxWidth(Double.MAX_VALUE);
         title.setAlignment(Pos.CENTER);
         gridPlace.setAlignment(Pos.BASELINE_CENTER);
@@ -226,6 +228,7 @@ public class SetupScreenView extends BaseView {
         this.armyC = armyColor;
 
         for (BorderPaneRankType rank : army) {
+
 
             Label label = (Label) rank.getBottom();
 

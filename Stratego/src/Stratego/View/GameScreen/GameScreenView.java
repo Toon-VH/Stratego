@@ -6,8 +6,6 @@ import Stratego.View.SetupScreen.BorderPanePosition;
 import Stratego.View.SetupScreen.BorderPaneRankType;
 import Stratego.View.UISettings;
 import Stratego.View.common.BaseView;
-import com.sun.jdi.Value;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,20 +16,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.time.Instant;
 
 
 public class GameScreenView extends BaseView {
 
     // private Node attributen (controls)
 
-    private Button ready;
-    private ImageView[][] imageViews;
+    private Button redButton;
+    private Button blueButton;
+    private BorderPanePosition[] positions;
+    private ImageView imgInfo;
+    private ImageView imgSave;
 
 
     public GameScreenView(UISettings uiSettings) {
-        this.imageViews = new ImageView[10][10];
         this.uiSettings = uiSettings;
         this.initialiseNodes();
         this.layoutNodes();
@@ -39,7 +37,17 @@ public class GameScreenView extends BaseView {
 
     private void initialiseNodes() {
         // Initialisatie van de Nodes
-        this.ready = new Button("Ready");
+        this.redButton = new Button("Play");
+        this.blueButton = new Button("Play");
+        try {
+            this.imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
+            this.imgSave = new ImageView(new Image(uiSettings.getSaveImg().toUri().toURL().toString()));
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        this.positions = new BorderPanePosition[100];
+
     }
 
     private void layoutNodes() {
@@ -49,8 +57,7 @@ public class GameScreenView extends BaseView {
         BorderPane rightTop = new BorderPane();
         BorderPane leftTop = new BorderPane();
         GridPane gridPlace = new GridPane();
-        Button redButton = new Button("Ready");
-        Button blueButton = new Button("Ready");
+
         Label dead1 = new Label("Dead");
         Label dead2 = new Label("Dead");
         Label red = new Label("100");
@@ -58,19 +65,12 @@ public class GameScreenView extends BaseView {
         gridPlace.setHgap(7);
         gridPlace.setVgap(7);
 
-        ImageView imgInfo = null;
-        ImageView imgSave = null;
+        this.imgSave.setFitWidth(70);
+        this.imgSave.setFitHeight(70);
+        this.imgInfo.setFitWidth(70);
+        this.imgInfo.setFitHeight(70);
 
-        try {
-            imgSave = new ImageView(new Image(uiSettings.getSaveImg().toUri().toURL().toString()));
-            imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
-            imgSave.setFitWidth(70);
-            imgSave.setFitHeight(70);
-            imgInfo.setFitWidth(70);
-            imgInfo.setFitHeight(70);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        int counter = 0;
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 try {
@@ -80,7 +80,7 @@ public class GameScreenView extends BaseView {
                     } else {
                         img = new Image(uiSettings.getGrassImg().toUri().toURL().toString());
                     }
-                    BorderPane position = new BorderPane();
+                    BorderPanePosition position = new BorderPanePosition(x, y);
 
                     position.setPrefSize(65, 65);
                     ImageView imageView = new ImageView();
@@ -94,9 +94,10 @@ public class GameScreenView extends BaseView {
                             new BackgroundSize(65, 65, false, false, false, false))));
 
                     position.setBorder(new Border(new BorderStroke(Color.BLACK,
-                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
 
-                    imageViews[x][y] = imageView;
+                    positions[counter] = position;
+                    counter++;
 
                     gridPlace.add(position, x, y);
                 } catch (MalformedURLException e) {
@@ -105,14 +106,6 @@ public class GameScreenView extends BaseView {
 
             }
         }
-        right.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        left.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        rightTop.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        leftTop.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         red.setFont(Font.font("Cambria", 30));
         blue.setFont(Font.font("Cambria", 30));
 
@@ -262,53 +255,111 @@ public class GameScreenView extends BaseView {
         return deadArmy;
     }
 
-    public void refresh(Turn turn, ArmyRank[][] armyRank) {
+    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier) {
 
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                if (armyRank[x][y] != null) {
-                    RankType rankType = armyRank[x][y].getRankType();
-                    ImageView selected = imageViews[x][y];
+        switch (nextPlayer) {
+            case Red:
+                redButton.setDisable(false);
+                blueButton.setDisable(true);
+                break;
+            case Blue:
+                redButton.setDisable(true);
+                blueButton.setDisable(false);
+                break;
+            case None:
+                redButton.setDisable(true);
+                blueButton.setDisable(true);
+                break;
+        }
 
-                    try {
+        for (BorderPanePosition position : positions) {
 
-                        if (turn == Turn.None) {
-                            if (rankType != null) {
-                                if (armyRank[x][y].getArmyColor() == ArmyColor.Blue) {
-                                    selected.setImage(new Image(uiSettings.getbBack().toUri().toURL().toString()));
-                                } else if (armyRank[x][y].getArmyColor() == ArmyColor.Red) {
-                                    selected.setImage(new Image(uiSettings.getrBack().toUri().toURL().toString()));
+            int x = position.getX();
+            int y = position.getY();
+
+
+            if (locationInfo[x][y] != null) {
+
+                LocationInfo info = locationInfo[x][y];
+                ImageView imgV = (ImageView) position.getCenter();
+
+                if (selectedSoldier != null) {
+                    if (x == selectedSoldier.getX() && y == selectedSoldier.getY()) {
+                        position.setBorder(new Border(new BorderStroke(Color.GREEN,
+                                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+                    } else if (info.isLoctionInRange()) {
+                        position.setBorder(new Border(new BorderStroke(Color.YELLOW,
+                                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+                    } else position.setBorder(new Border(new BorderStroke(Color.BLACK,
+                            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+                } else position.setBorder(new Border(new BorderStroke(Color.BLACK,
+                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+
+                try {
+
+                    switch (turn) {
+                        case Red:
+                            if (info.getRankType() != null) {
+                                if (locationInfo[x][y].getArmyColor() == ArmyColor.Red) {
+                                    imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Red));
+                                } else imgV.setImage(new Image(uiSettings.getbBack().toUri().toURL().toString()));
+                            } else imgV.setImage(null);
+
+                            break;
+                        case Blue:
+                            if (info.getRankType() != null) {
+                                if (locationInfo[x][y].getArmyColor() == ArmyColor.Blue) {
+                                    imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Blue));
+                                } else imgV.setImage(new Image(uiSettings.getrBack().toUri().toURL().toString()));
+                            } else imgV.setImage(null);
+
+                            break;
+                        case None:
+                            if (info.getRankType() != null) {
+                                if (locationInfo[x][y].getArmyColor() == ArmyColor.Blue) {
+                                    imgV.setImage(new Image(uiSettings.getbBack().toUri().toURL().toString()));
+                                } else if (locationInfo[x][y].getArmyColor() == ArmyColor.Red) {
+                                    imgV.setImage(new Image(uiSettings.getrBack().toUri().toURL().toString()));
                                 }
-
-                            }
-
-                        } else if (turn == Turn.Blue) {
-
-                            if (rankType != null) {
-                                if (armyRank[x][y].getArmyColor() == ArmyColor.Blue) {
-                                    selected.setImage(getArmyImage(rankType, ArmyColor.Blue));
-                                } else selected.setImage(new Image(uiSettings.getrBack().toUri().toURL().toString()));
-
-                            }
-                        } else if (turn == Turn.Red) {
-
-                            if (rankType != null) {
-                                if (armyRank[x][y].getArmyColor() == ArmyColor.Red) {
-                                    selected.setImage(getArmyImage(rankType, ArmyColor.Red));
-                                } else selected.setImage(new Image(uiSettings.getbBack().toUri().toURL().toString()));
-
+                            } else imgV.setImage(null);
+                            break;
+                    }
+                    if (targetsoldier != null) {
+                        if (x == targetsoldier.getX() && y == targetsoldier.getY()) {
+                            if (turn == Turn.Blue) {
+                                imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Blue));
+                            } else if (turn == Turn.Red) {
+                                imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Red));
                             }
                         }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
                     }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
                 }
             }
         }
+
     }
 
-    public Button getReady() {
-        return ready;
+
+    public Button getRedButton() {
+        return redButton;
+    }
+
+    public Button getBlueButton() {
+        return blueButton;
+    }
+
+    public BorderPanePosition[] getPositions() {
+        return positions;
+    }
+
+    public ImageView getImgInfo() {
+        return imgInfo;
+    }
+
+    public ImageView getImgSave() {
+        return imgSave;
     }
 }
 

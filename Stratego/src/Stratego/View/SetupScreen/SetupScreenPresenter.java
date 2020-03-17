@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class SetupScreenPresenter {
                 public void handle(MouseEvent mouseEvent) {
                     int x = position.getX();
                     int y = position.getY();
-                        strategoSetup.SetSoldier(selected, x, y);
+                    strategoSetup.SetSoldier(selected, x, y);
                     updateView();
 
                 }
@@ -120,8 +121,9 @@ public class SetupScreenPresenter {
 
 
                     }
-                }
+                } //else throw new Exception("You diden't put all you Pawns on the Board!");
             }
+
         });
         // aan de controls uit de view.
         // Event handlers: roepen methodes aan uit het

@@ -3,13 +3,14 @@ package Stratego.View.GameScreen;
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.RankType;
 
-public class ArmyRank {
+public class LocationInfo {
 
     private ArmyColor armyColor;
     private RankType rankType;
+    private boolean loctionInRange;
 
 
-    public ArmyRank(RankType rankType, ArmyColor armyColor) {
+    public LocationInfo(RankType rankType, ArmyColor armyColor) {
         this.armyColor = armyColor;
         this.rankType = rankType;
     }
@@ -20,5 +21,13 @@ public class ArmyRank {
 
     public RankType getRankType() {
         return rankType;
+    }
+
+    public void setLoctionInRange(boolean loctionInRange) {
+        this.loctionInRange = loctionInRange;
+    }
+
+    public boolean isLoctionInRange() {
+        return loctionInRange;
     }
 }

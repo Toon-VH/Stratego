@@ -1,7 +1,5 @@
 package Stratego.Model.gamePlay.player;
 
-
-
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gamePlay.army.Army;
 import Stratego.Model.gamePlay.army.ArmyColor;
@@ -15,8 +13,8 @@ import Stratego.Model.gamePlay.playground.Playground;
 public class Player {
 
     protected Army army;
-    protected String name;
-    protected Pawn activePawn;
+    private String name;
+    private Pawn activePawn;
 
     public Player(String name, ArmyColor color) {
         this.army = new Army(color);
