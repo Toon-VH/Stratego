@@ -1,5 +1,6 @@
 package Stratego.View.GameScreen;
 
+import Stratego.Model.gameAI.AI;
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gamePlay.army.Army;
 import Stratego.Model.gamePlay.army.ArmyColor;
@@ -33,14 +34,18 @@ public class GameScreenPresenter {
 
     private Stratego model;
     private GameScreenView view;
+    private AI ai;
     private UISettings uiSettings;
     private Stage stage;
     private boolean pauze;
+    private boolean aIPlayer;
     private SelectedSoldier selectedSoldier;
     private SelectedSoldier targetPlace;
 
 
-    public GameScreenPresenter(Stratego model, GameScreenView view, UISettings uiSettings, Stage stage) {
+    public GameScreenPresenter(Stratego model, GameScreenView view, AI ai, UISettings uiSettings, Stage stage,boolean aIPlayer) {
+        this.aIPlayer = aIPlayer;
+        this.ai = ai;
         this.pauze = true;
         this.selectedSoldier = null;
         this.targetPlace = null;
@@ -201,7 +206,7 @@ public class GameScreenPresenter {
                     Stratego newModel = new Stratego("Speler1", "Speler2");
                     StrategoSetup newStrategoSetup = new StrategoSetup();
                     HomeScreenView msView = new HomeScreenView(uiSettings);
-                    HomeScreenPresenter msPresenter = new HomeScreenPresenter(newModel, newStrategoSetup, msView, uiSettings, stage);
+                    HomeScreenPresenter msPresenter = new HomeScreenPresenter(newModel, newStrategoSetup,ai, msView, uiSettings, stage);
                     view.getScene().setRoot(msView);
                     try {
                         msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
@@ -294,7 +299,7 @@ public class GameScreenPresenter {
 
 
         ArmyStatus armyStatus = creatArmyStatus(model.getPlayground().getDead());
-        view.refresh(turn, setup, selectedSoldier, nextPlayer, targetPlace,armyStatus);
+        view.refresh(turn, setup, selectedSoldier, nextPlayer, targetPlace,armyStatus,aIPlayer);
     }
 
     public void addWindowEventHandlers() {

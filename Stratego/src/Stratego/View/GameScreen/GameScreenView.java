@@ -267,7 +267,7 @@ public class GameScreenView extends BaseView {
         return deadArmy;
     }
 
-    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier, ArmyStatus armyStatus) {
+    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier, ArmyStatus armyStatus,boolean aI) {
 
         switch (nextPlayer) {
             case Red:

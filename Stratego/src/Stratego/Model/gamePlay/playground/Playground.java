@@ -77,13 +77,10 @@ public class Playground {
 
 
     public void setPawn(int x, int y, Pawn pawn) {
-        try {
-            PawnLocation pawnLocation = (PawnLocation) locations[x][y];
-            pawnLocation.setStandOn(pawn);
-            pawn.setLocation(pawnLocation);
-        } catch (Exception ex) {
-            System.out.println("x: " + x + " y: " + y + " pawn: " + pawn.getRank());
-        }
+        //zet pawn op locatie x,y
+        PawnLocation pawnLocation = (PawnLocation) locations[x][y];
+        pawnLocation.setStandOn(pawn);
+        pawn.setLocation(pawnLocation);
     }
 
     public boolean isFlagCaptured() {
@@ -91,6 +88,7 @@ public class Playground {
     }
 
     public void loadArmySetup(ArmyColor armyColor, Path file) {
+        //leest file in en zer de legerd op de juiste potitie op het bord
         int direction = 0;
         int startX = 0;
         int y = 0;
@@ -126,7 +124,7 @@ public class Playground {
     }
 
     private Pawn getPawnFromString(String str, Army army) {
-
+        //zet string om naar een ranktype
         RankType rankType = null;
         switch (str.toLowerCase()) {
             case "1":
@@ -174,6 +172,7 @@ public class Playground {
     }
 
     public void fight(Pawn attacker, Pawn defender) {
+        //berekend resultaat van een gevecht tusssen 2 pionnen en zet doden in doden lijst + haalt doden van het bord
         FightResult fightResult = null;
         switch (attacker.getRank()) {
             case Marshal:
@@ -461,6 +460,7 @@ public class Playground {
     }
 
     public void calcPossibleLocations(PawnLocation from) {
+        //bereken alle mogelijke locatios van de pion en zet de locaties inrange op true
         MoveType moveType = from.standOn.getMove();
         resetIsInRange();
         switch (moveType) {
@@ -472,7 +472,7 @@ public class Playground {
                 if (getTargetLocationAnalysis(from, from.east) != 0) {
                     ((PawnLocation) from.east).setInRange(true);
                 }
-                if (getTargetLocationAnalysis(from, from.south) != 0) {
+                if (getTargetLocationAnalysis(from, from.south) !=0) {
                     ((PawnLocation) from.south).setInRange(true);
                 }
                 if (getTargetLocationAnalysis(from, from.west) != 0) {
@@ -494,11 +494,12 @@ public class Playground {
     }
 
     private void multiMovePossibleLocation(PawnLocation startLocation, List<PawnLocation> pawnLocationList) {
+        //TODO uitleg
         multiMovePossibleLocation(startLocation, startLocation, pawnLocationList);
     }
 
     private void multiMovePossibleLocation(PawnLocation startLocation, PawnLocation prevLocation, List<PawnLocation> pawnLocationList) {
-
+        //TODO uitleg functie
         int northAnalysis = getTargetLocationAnalysis(startLocation, prevLocation.nord);
         int eastAnalysis = getTargetLocationAnalysis(startLocation, prevLocation.east);
         int southAnalysis = getTargetLocationAnalysis(startLocation, prevLocation.south);
@@ -533,6 +534,7 @@ public class Playground {
     }
 
     private int getTargetLocationAnalysis(PawnLocation startLocation, Location targetLocation) {
+        //geeft waarde terug aan de hand van waar je je pion wil zetten
         if (targetLocation instanceof PawnLocation) {
             PawnLocation pawnLocation = (PawnLocation) targetLocation;
             if (pawnLocation.getStandOn() == null) {
@@ -546,6 +548,7 @@ public class Playground {
     }
 
     public void resetIsInRange() {
+        //reset alle inrage atributen van locaties
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 Location l = locations[x][y];

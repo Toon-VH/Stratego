@@ -19,6 +19,7 @@ public class HomeScreenView extends BorderPane {
     private Button single_player;
     private Button classic_battle;
     private ImageView imgInfo;
+    private ImageView saveImg;
     private UISettings uiSettings;
 
     public HomeScreenView(UISettings uiSettings) {
@@ -31,6 +32,7 @@ public class HomeScreenView extends BorderPane {
     private void initialiseNodes() {
         // Initialisatie van de Nodes
         try {
+            this.saveImg = new ImageView(new Image(uiSettings.getSaveImg().toUri().toURL().toString()));
             this.imgInfo = new ImageView(new Image(uiSettings.getInfoImg().toUri().toURL().toString()));
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -43,25 +45,31 @@ public class HomeScreenView extends BorderPane {
     private void layoutNodes() {
         // Layout van de Nodes
         BorderPane top = new BorderPane();
-        Label title = new Label("Welcome to Stratego");
+        ImageView banner = new ImageView();
         HBox center = new HBox();
+
+
+
+        try {
+            banner.setImage(new Image(uiSettings.getStartScreenImagePath().toUri().toURL().toString()));
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        top.setLeft(saveImg);
         top.setRight(imgInfo);
-
-
-
         imgInfo.setFitWidth(70);
         imgInfo.setFitHeight(70);
+        saveImg.setFitWidth(70);
+        saveImg.setFitHeight(70);
         center.getChildren().addAll(single_player, classic_battle);
         setCenter(center);
         setTop(top);
-        top.setCenter(title);
+        top.setCenter(banner);
         single_player.setPrefSize(300, 200);
         classic_battle.setPrefSize(300, 200);
-        title.setFont(Font.font("Cambria", 34));
-        title.setAlignment(Pos.BASELINE_CENTER);
         center.setAlignment(Pos.CENTER);
         center.setSpacing(600);
-        setMargin(title, new Insets(100, 0, 0, 0));
         this.setPadding(new Insets(20));
 
 

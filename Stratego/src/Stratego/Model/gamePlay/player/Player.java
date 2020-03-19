@@ -9,31 +9,26 @@ import Stratego.Model.gamePlay.playground.Location;
 import Stratego.Model.gamePlay.playground.PawnLocation;
 import Stratego.Model.gamePlay.playground.Playground;
 
-
 public class Player {
-
+    //player
     protected Army army;
-    private String name;
     private Pawn activePawn;
 
     public Player(String name, ArmyColor color) {
         this.army = new Army(color);
-        this.name = name;
     }
 
     public Army getArmy() {
         return army;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Pawn getActivePawn() {
         return activePawn;
     }
 
+
     public void take(PawnLocation pawn, Playground playground, Stratego game) throws Exception {
+        //pion de hij wilt verzetten
         playground.calcPossibleLocations(pawn);
 
         boolean AreInRange = false;
@@ -60,6 +55,7 @@ public class Player {
     }
 
     public void place(PawnLocation pawnLocation, Playground playground) throws Exception {
+        //zet pion op locatie if in range
         if (pawnLocation.isInRange()) {
             if (pawnLocation.getStandOn() != null) {
                 playground.fight(activePawn, pawnLocation.getStandOn());

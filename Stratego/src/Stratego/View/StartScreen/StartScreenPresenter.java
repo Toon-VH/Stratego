@@ -1,6 +1,7 @@
 package Stratego.View.StartScreen;
 
 
+import Stratego.Model.gameAI.AI;
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.GameScreen.GameScreenPresenter;
@@ -19,11 +20,13 @@ public class StartScreenPresenter {
 
     private Stratego model;
     private StrategoSetup strategoSetup;
+    private AI ai;
     private StartScreenView view;
     private UISettings uiSettings;
     private Stage stage;
 
-    public StartScreenPresenter(Stratego model, StrategoSetup strategoSetup, StartScreenView view, UISettings uiSettings, Stage stage) {
+    public StartScreenPresenter(Stratego model, StrategoSetup strategoSetup,AI ai, StartScreenView view, UISettings uiSettings, Stage stage) {
+        this.ai = ai;
         this.model = model;
         this.strategoSetup = strategoSetup;
         this.view = view;
@@ -41,7 +44,7 @@ public class StartScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 HomeScreenView msView = new HomeScreenView(uiSettings);
-                HomeScreenPresenter msPresenter = new HomeScreenPresenter(model,strategoSetup, msView, uiSettings,stage);
+                HomeScreenPresenter msPresenter = new HomeScreenPresenter(model,strategoSetup, ai, msView, uiSettings,stage);
                 view.getScene().setRoot(msView);
                 try {
                     msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());

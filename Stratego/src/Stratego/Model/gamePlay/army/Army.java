@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class Army {
+    //leger per kleur
     private List<Pawn> pawns;
     private ArmyColor color;
 

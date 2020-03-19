@@ -1,5 +1,6 @@
 package Stratego;
 
+import Stratego.Model.gameAI.AI;
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.Pawn;
@@ -26,12 +27,13 @@ public class StrategoMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         UISettings uiSettings = new UISettings();
-        Stratego model = new Stratego("Speler1","Speler2");
+        Stratego model = new Stratego("Speler1", "Speler2");
         StrategoSetup strategoSetup = new StrategoSetup();
+        AI ai = new AI();
         StartScreenView view = new StartScreenView(uiSettings);
-        StartScreenPresenter presenter = new StartScreenPresenter(model,strategoSetup, view, uiSettings, primaryStage);
+        StartScreenPresenter presenter = new StartScreenPresenter(model, strategoSetup,ai, view, uiSettings, primaryStage);
         Scene scene = new Scene(view);
-        if (uiSettings.styleSheetAvailable()){
+        if (uiSettings.styleSheetAvailable()) {
             try {
                 scene.getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
             } catch (MalformedURLException ex) {
@@ -43,12 +45,11 @@ public class StrategoMain extends Application {
         primaryStage.setWidth(uiSettings.getLowestRes() / 4);
         primaryStage.setTitle(uiSettings.getApplicationName());
         if (Files.exists(uiSettings.getApplicationIconPath())) {
-             try {
-                 primaryStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-             }
-             catch (MalformedURLException ex) {
-                 // do nothing, if toURL-conversion fails, program can continue
-             }
+            try {
+                primaryStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+            } catch (MalformedURLException ex) {
+                // do nothing, if toURL-conversion fails, program can continue
+            }
         } else { // do nothing, if ApplicationIcon is not available, program can continue
         }
         presenter.windowsHandler();
@@ -58,7 +59,7 @@ public class StrategoMain extends Application {
     public static void main(String[] args) {
         launch(args);
 
-
+        // verder is oor console
         boolean finish = false;
         Scanner keyboard = new Scanner(System.in);
         System.out.println("                                                                                                                                              \n" +
@@ -119,7 +120,7 @@ public class StrategoMain extends Application {
                 System.out.println("Please enter pawn location you want to move x,y");
                 String moveFrom = keyboard.nextLine();
                 PawnLocation locationFrom = (PawnLocation) getLocationFromCoordinates(moveFrom, playground);
-                game.getActivePlayer().take(locationFrom, playground,game);
+                game.getActivePlayer().take(locationFrom, playground, game);
                 printPlayground(playground, game.getActivePlayer());
                 System.out.println("Please enter pawn location you want to move to x,y");
                 String moveTo = keyboard.nextLine();
@@ -176,20 +177,19 @@ public class StrategoMain extends Application {
                     if (pawn != null) {
                         if (pawn.getParent().getColor() != player.getArmy().getColor()) {
 
-                            if (pawn.getParent().getColor() == ArmyColor.Red){
+                            if (pawn.getParent().getColor() == ArmyColor.Red) {
                                 if (((PawnLocation) locations[x - 2][y - 2]).isInRange()) {
                                     result += "\u001B[33m";
-                                }else result +="\u001B[31m";
+                                } else result += "\u001B[31m";
                                 result += "X";
-                            }else if (pawn.getParent().getColor() == ArmyColor.Blue){
+                            } else if (pawn.getParent().getColor() == ArmyColor.Blue) {
                                 if (((PawnLocation) locations[x - 2][y - 2]).isInRange()) {
                                     result += "\u001B[33m";
-                                }else result +="\u001B[34m";
+                                } else result += "\u001B[34m";
                                 result += "X";
                             }
 
-                        }
-                        else {
+                        } else {
                             switch (pawn.getRank()) {
                                 case Marshal:
                                     result += "10";

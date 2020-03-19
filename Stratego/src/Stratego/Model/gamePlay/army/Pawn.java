@@ -1,20 +1,16 @@
 package Stratego.Model.gamePlay.army;
 
-
 import Stratego.Model.gamePlay.playground.Location;
 import Stratego.Model.gamePlay.playground.PawnLocation;
 
-
 public class Pawn {
+    //een pion
+    private Army parent;
+    private RankType rank;
+    private PawnLocation location;
+    private MoveType move;
 
-    protected Army parent;
-    protected RankType rank;
-    protected PawnLocation location;
-   protected MoveType move;
-
-
-
-    public Pawn( Army parent, RankType rank,MoveType move) {
+    Pawn(Army parent, RankType rank, MoveType move) {
         this.parent = parent;
         this.rank = rank;
         this.move = move;
@@ -43,10 +39,12 @@ public class Pawn {
     }
 
     public boolean isSet() {
+        //is gezet?
         return location != null;
     }
 
     public void move(PawnLocation to) {
+        //verplaats pion
         this.location.setStandOn(null);
         this.location = to;
         this.location.setStandOn(this);

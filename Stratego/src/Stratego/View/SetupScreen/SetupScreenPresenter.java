@@ -1,5 +1,6 @@
 package Stratego.View.SetupScreen;
 
+import Stratego.Model.gameAI.AI;
 import Stratego.Model.gamePlay.Stratego;
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.RankType;
@@ -27,13 +28,17 @@ public class SetupScreenPresenter {
 
     private Stratego strategoModel;
     private StrategoSetup strategoSetup;
+    private AI ai;
     private SetupScreenView view;
     private UISettings uiSettings;
     private Stage stage;
     private RankType selected;
     private ArmyColor armyC;
+    private boolean aIPlayer;
 
-    public SetupScreenPresenter(Stratego strategoModel, StrategoSetup strategoSetup, SetupScreenView view, UISettings uiSettings, Stage stage) {
+    public SetupScreenPresenter(Stratego strategoModel, StrategoSetup strategoSetup, AI ai, SetupScreenView view, UISettings uiSettings, Stage stage, boolean aIPlayer) {
+        this.ai = ai;
+        this.aIPlayer = aIPlayer;
         this.armyC = ArmyColor.Blue;
         this.strategoSetup = strategoSetup;
         this.strategoModel = strategoModel;
@@ -116,22 +121,18 @@ public class SetupScreenPresenter {
 
                     if (armyC == ArmyColor.Red) {
                         strategoSetup.saveConfig(uiSettings.getRedS());
-                        GameScreenView gameView = new GameScreenView(uiSettings);
-                        GameScreenPresenter stpPresenter = new GameScreenPresenter(strategoModel, gameView, uiSettings, stage);
-                        view.getScene().setRoot(gameView);
-                        try {
-                            gameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                        } catch (MalformedURLException ex) {
-                            // // do nothing, if toURL-conversion fails, program can continue
-                        }
-                        stage.setMaximized(true);
-                        stpPresenter.windowsHandler();
+                        openGameScreen();
 
                     } else {
-                        armyC = ArmyColor.Red;
-                        strategoSetup.clearSetup();
-                        updateView();
+                        if (aIPlayer) {
+                            ai.saveAIConfig(uiSettings.getRedS());
+                            openGameScreen();
 
+                        } else {
+                            armyC = ArmyColor.Red;
+                            strategoSetup.clearSetup();
+                            updateView();
+                        }
 
                     }
                 } else {
@@ -146,6 +147,20 @@ public class SetupScreenPresenter {
         // aan de controls uit de view.
         // Event handlers: roepen methodes aan uit het
         // model en zorgen voor een update van de view.
+    }
+
+    private void openGameScreen() {
+        GameScreenView gameView = new GameScreenView(uiSettings);
+        GameScreenPresenter stpPresenter = new GameScreenPresenter(strategoModel, gameView,ai, uiSettings, stage ,aIPlayer);
+        view.getScene().setRoot(gameView);
+        try {
+            gameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+        } catch (MalformedURLException ex) {
+            // // do nothing, if toURL-conversion fails, program can continue
+        }
+        stage.setMaximized(true);
+        stpPresenter.windowsHandler();
+
     }
 
     private void updateView() {
