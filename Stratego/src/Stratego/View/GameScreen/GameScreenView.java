@@ -21,12 +21,15 @@ import java.net.MalformedURLException;
 public class GameScreenView extends BaseView {
 
     // private Node attributen (controls)
-
+    private BorderPaneRankType[] reDead;
+    private BorderPaneRankType[] blueDead;
     private Button redButton;
     private Button blueButton;
     private BorderPanePosition[] positions;
     private ImageView imgInfo;
     private ImageView imgSave;
+    private Label redPower;
+    private Label bluePower;
 
 
     public GameScreenView(UISettings uiSettings) {
@@ -37,6 +40,8 @@ public class GameScreenView extends BaseView {
 
     private void initialiseNodes() {
         // Initialisatie van de Nodes
+        this.redPower = new Label();
+        this.bluePower = new Label();
         this.redButton = new Button("Play");
         this.blueButton = new Button("Play");
         try {
@@ -60,8 +65,7 @@ public class GameScreenView extends BaseView {
 
         Label dead1 = new Label("Dead");
         Label dead2 = new Label("Dead");
-        Label red = new Label("100");
-        Label blue = new Label("100");
+
         gridPlace.setHgap(7);
         gridPlace.setVgap(7);
 
@@ -76,7 +80,15 @@ public class GameScreenView extends BaseView {
                 try {
                     Image img;
                     if ((y == 4 || y == 5) && (x == 2 || x == 3 || x == 6 || x == 7)) {
-                        img = new Image(uiSettings.getWater1().toUri().toURL().toString());
+                        if (y == 4) {
+                            if (x == 2 || x == 6) {
+                                img = new Image(uiSettings.getWater1().toUri().toURL().toString());
+                            } else img = new Image(uiSettings.getWater2().toUri().toURL().toString());
+                        } else {
+                            if (x == 2 || x == 6) {
+                                img = new Image(uiSettings.getWater4().toUri().toURL().toString());
+                            } else img = new Image(uiSettings.getWater3().toUri().toURL().toString());
+                        }
                     } else {
                         img = new Image(uiSettings.getGrassImg().toUri().toURL().toString());
                     }
@@ -106,24 +118,24 @@ public class GameScreenView extends BaseView {
 
             }
         }
-        red.setFont(Font.font("Cambria", 30));
-        blue.setFont(Font.font("Cambria", 30));
+        redPower.setFont(Font.font("Cambria", 30));
+        bluePower.setFont(Font.font("Cambria", 30));
 
         setRight(right);
         setLeft(left);
         setCenter(gridPlace);
 
-        drawDeadArmy(left, ArmyColor.Blue);
-        drawDeadArmy(right, ArmyColor.Red);
+        this.blueDead = drawDeadArmy(left, ArmyColor.Blue);
+        this.reDead = drawDeadArmy(right, ArmyColor.Red);
 
         right.setTop(rightTop);
         rightTop.setRight(imgInfo);
-        rightTop.setLeft(red);
+        rightTop.setLeft(redPower);
         rightTop.setBottom(dead1);
         right.setBottom(redButton);
 
         left.setTop(leftTop);
-        leftTop.setRight(blue);
+        leftTop.setRight(bluePower);
         leftTop.setLeft(imgSave);
         leftTop.setBottom(dead2);
         left.setBottom(blueButton);
@@ -145,9 +157,9 @@ public class GameScreenView extends BaseView {
     // implementatie van de nodige
     // package-private Getters
 
-    private BorderPane[] drawDeadArmy(BorderPane pane, ArmyColor armyColor) {
+    private BorderPaneRankType[] drawDeadArmy(BorderPane pane, ArmyColor armyColor) {
 
-        BorderPane[] deadArmy = new BorderPane[12];
+        BorderPaneRankType[] deadArmy = new BorderPaneRankType[12];
         GridPane gridDead = new GridPane();
         RankType soldierType = null;
         ImageView img = new ImageView();
@@ -241,7 +253,7 @@ public class GameScreenView extends BaseView {
                 name.setMaxWidth(Double.MAX_VALUE);
                 name.setAlignment(Pos.CENTER);
 
-                img.setFitWidth(60);
+                img.setFitWidth(70);
                 img.setFitHeight(60);
 
                 deadArmy[counter] = borderPane;
@@ -255,7 +267,7 @@ public class GameScreenView extends BaseView {
         return deadArmy;
     }
 
-    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier) {
+    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier, ArmyStatus armyStatus) {
 
         switch (nextPlayer) {
             case Red:
@@ -312,7 +324,6 @@ public class GameScreenView extends BaseView {
                                     imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Blue));
                                 } else imgV.setImage(new Image(uiSettings.getrBack().toUri().toURL().toString()));
                             } else imgV.setImage(null);
-
                             break;
                         case None:
                             if (info.getRankType() != null) {
@@ -325,14 +336,37 @@ public class GameScreenView extends BaseView {
                             break;
                     }
                     if (targetsoldier != null) {
-                        if (x == targetsoldier.getX() && y == targetsoldier.getY()) {
+                        if (x == targetsoldier.getX() && y == targetsoldier.getY() && info.getRankType() != null) {
                             if (turn == Turn.Blue) {
-                                imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Blue));
-                            } else if (turn == Turn.Red) {
                                 imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Red));
+                            } else if (turn == Turn.Red) {
+                                imgV.setImage(getArmyImage(info.getRankType(), ArmyColor.Blue));
                             }
                         }
                     }
+
+                    for (BorderPaneRankType borderPaneRankType : this.reDead) {
+                        Label label = (Label) borderPaneRankType.getBottom();
+                        if (armyStatus.getArmyStatusRed().containsKey(borderPaneRankType.getRankType())) {
+                            int dead = armyStatus.getArmyStatusRed().get(borderPaneRankType.getRankType());
+                            label.setText(Integer.toString(dead));
+                        } else {
+                            label.setText("0");
+                        }
+                    }
+                    for (BorderPaneRankType borderPaneRankType : this.blueDead) {
+                        Label label = (Label) borderPaneRankType.getBottom();
+                        if (armyStatus.getArmyStatusBlue().containsKey(borderPaneRankType.getRankType())) {
+                            int dead = armyStatus.getArmyStatusBlue().get(borderPaneRankType.getRankType());
+                            label.setText(Integer.toString(dead));
+                        } else {
+                            label.setText("0");
+                        }
+                    }
+
+                    redPower.setText(Integer.toString(armyStatus.getRedPower()));
+                    bluePower.setText(Integer.toString(armyStatus.getBluePower()));
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }

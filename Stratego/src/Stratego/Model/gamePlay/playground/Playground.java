@@ -2,6 +2,7 @@ package Stratego.Model.gamePlay.playground;
 
 import Stratego.Model.gamePlay.army.*;
 import Stratego.Model.gamePlay.player.Player;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,12 +13,11 @@ import java.util.stream.Stream;
 
 public class Playground {
 
-    protected Location[][] locations;
-    protected Player redArmy;
-    protected Player blueArmy;
-    protected List<Pawn> dead;
-    protected boolean isFlagCaptured;
-
+    private Location[][] locations;
+    private Player redArmy;
+    private Player blueArmy;
+    private List<Pawn> dead;
+    private boolean isFlagCaptured;
 
     public Playground(Player redArmy, Player blueArmy) {
         this.isFlagCaptured = false;
@@ -39,7 +39,6 @@ public class Playground {
                     locations[x][y] = new PawnLocation();
                 }
             }
-
         }
         for (int x = 0; x <= 9; x++) {
             for (int y = 0; y <= 9; y++) {
@@ -495,7 +494,9 @@ public class Playground {
     }
 
     private void multiMovePossibleLocation(PawnLocation startLocation, List<PawnLocation> pawnLocationList) {
-        multiMovePossibleLocation(startLocation,startLocation,pawnLocationList);}
+        multiMovePossibleLocation(startLocation, startLocation, pawnLocationList);
+    }
+
     private void multiMovePossibleLocation(PawnLocation startLocation, PawnLocation prevLocation, List<PawnLocation> pawnLocationList) {
 
         int northAnalysis = getTargetLocationAnalysis(startLocation, prevLocation.nord);
@@ -503,30 +504,30 @@ public class Playground {
         int southAnalysis = getTargetLocationAnalysis(startLocation, prevLocation.south);
         int westAnalysis = getTargetLocationAnalysis(startLocation, prevLocation.west);
 
-        if ( northAnalysis != 0 && !pawnLocationList.contains(prevLocation.nord)) {
+        if (northAnalysis != 0 && !pawnLocationList.contains(prevLocation.nord)) {
             pawnLocationList.add((PawnLocation) prevLocation.nord);
 
-            if(northAnalysis == 1)
-            multiMovePossibleLocation(startLocation, (PawnLocation) prevLocation.nord, pawnLocationList);
+            if (northAnalysis == 1)
+                multiMovePossibleLocation(startLocation, (PawnLocation) prevLocation.nord, pawnLocationList);
         }
 
         if (eastAnalysis != 0 && !pawnLocationList.contains(prevLocation.east)) {
             pawnLocationList.add((PawnLocation) prevLocation.east);
 
-            if(eastAnalysis == 1)
-            multiMovePossibleLocation(startLocation,(PawnLocation) prevLocation.east, pawnLocationList);
+            if (eastAnalysis == 1)
+                multiMovePossibleLocation(startLocation, (PawnLocation) prevLocation.east, pawnLocationList);
         }
         if (southAnalysis != 0 && !pawnLocationList.contains(prevLocation.south)) {
             pawnLocationList.add((PawnLocation) prevLocation.south);
 
-            if(southAnalysis == 1)
-            multiMovePossibleLocation(startLocation,(PawnLocation) prevLocation.south, pawnLocationList);
+            if (southAnalysis == 1)
+                multiMovePossibleLocation(startLocation, (PawnLocation) prevLocation.south, pawnLocationList);
         }
         if (westAnalysis != 0 && !pawnLocationList.contains(prevLocation.west)) {
             pawnLocationList.add((PawnLocation) prevLocation.west);
 
-            if(westAnalysis == 1)
-            multiMovePossibleLocation(startLocation,(PawnLocation) prevLocation.west, pawnLocationList);
+            if (westAnalysis == 1)
+                multiMovePossibleLocation(startLocation, (PawnLocation) prevLocation.west, pawnLocationList);
         }
 
     }
@@ -534,10 +535,10 @@ public class Playground {
     private int getTargetLocationAnalysis(PawnLocation startLocation, Location targetLocation) {
         if (targetLocation instanceof PawnLocation) {
             PawnLocation pawnLocation = (PawnLocation) targetLocation;
-            if (pawnLocation.getStandOn() == null ) {
+            if (pawnLocation.getStandOn() == null) {
                 return 1;
             }
-            if (pawnLocation.getStandOn().getParent() != startLocation.getStandOn().getParent()){
+            if (pawnLocation.getStandOn().getParent() != startLocation.getStandOn().getParent()) {
                 return 2;
             }
         }
@@ -555,4 +556,7 @@ public class Playground {
         }
     }
 
+    public List<Pawn> getDead() {
+        return dead;
+    }
 }

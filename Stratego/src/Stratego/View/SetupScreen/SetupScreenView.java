@@ -61,8 +61,11 @@ public class SetupScreenView extends BaseView {
                 for (int y = 0; y < 5; y++) {
 
                     Image img;
-                    if (y == 0 && (x == 2 || x == 3 || x == 6 || x == 7)) {
-                        img = new Image(uiSettings.getWater1().toUri().toURL().toString());
+                    if ((y == 0) && (x == 2 || x == 6 || x == 3 || x == 7)) {
+                        if (x == 2 || x == 6) {
+                            img = new Image(uiSettings.getWater4().toUri().toURL().toString());
+                        }else img = new Image(uiSettings.getWater3().toUri().toURL().toString());
+
                     } else {
                         img = new Image(uiSettings.getGrassImg().toUri().toURL().toString());
                     }
@@ -180,7 +183,7 @@ public class SetupScreenView extends BaseView {
                     name.setAlignment(Pos.CENTER);
 
                     img.setFitWidth(70);
-                    img.setFitHeight(70);
+                    img.setFitHeight(60);
 
                     army[counter] = borderPane;
                     counter++;
@@ -209,7 +212,7 @@ public class SetupScreenView extends BaseView {
         title.setFont(Font.font("Cambria", 32));
         setMargin(gridPlace, new Insets(50, 0, 0, 0));
         setMargin(title, new Insets(50, 0, 0, 0));
-        ready.setPrefSize(100,100);
+        ready.setPrefSize(100, 50);
         ready.setAlignment(Pos.CENTER);
         title.setMaxWidth(Double.MAX_VALUE);
         title.setAlignment(Pos.CENTER);

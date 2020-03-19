@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.MalformedURLException;
@@ -18,7 +19,7 @@ public class HomeScreenView extends BorderPane {
     private Button single_player;
     private Button classic_battle;
     private ImageView imgInfo;
-    UISettings uiSettings;
+    private UISettings uiSettings;
 
     public HomeScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -45,6 +46,9 @@ public class HomeScreenView extends BorderPane {
         Label title = new Label("Welcome to Stratego");
         HBox center = new HBox();
         top.setRight(imgInfo);
+
+
+
         imgInfo.setFitWidth(70);
         imgInfo.setFitHeight(70);
         center.getChildren().addAll(single_player, classic_battle);
@@ -53,7 +57,7 @@ public class HomeScreenView extends BorderPane {
         top.setCenter(title);
         single_player.setPrefSize(300, 200);
         classic_battle.setPrefSize(300, 200);
-        title.setFont(Font.font("Cambria", 30));
+        title.setFont(Font.font("Cambria", 34));
         title.setAlignment(Pos.BASELINE_CENTER);
         center.setAlignment(Pos.CENTER);
         center.setSpacing(600);

@@ -16,18 +16,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class SetupScreenPresenter {
 
     private Stratego strategoModel;
     private StrategoSetup strategoSetup;
     private SetupScreenView view;
-    UISettings uiSettings;
+    private UISettings uiSettings;
     private Stage stage;
     private RankType selected;
     private ArmyColor armyC;
@@ -73,9 +74,21 @@ public class SetupScreenPresenter {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Chose your setup file!");
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"));
                 File selectedFile = fileChooser.showOpenDialog(stage);
-                strategoSetup.loadConfiguration(selectedFile);
-                updateView();
+                if ((selectedFile != null && Files.isReadable(Paths.get(selectedFile.toURI())))) {
+                    // implementeren wegschrijven model-gegevens vb:
+                    strategoSetup.loadConfiguration(selectedFile);
+                    updateView();
+                } else {
+                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
+                    errorWindow.setHeaderText("Problem with selected file");
+                    errorWindow.setContentText("File is not Readable");
+                    errorWindow.showAndWait();
+                }
+
 
             }
         });
@@ -121,7 +134,12 @@ public class SetupScreenPresenter {
 
 
                     }
-                } //else throw new Exception("You diden't put all you Pawns on the Board!");
+                } else {
+                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
+                    errorWindow.setHeaderText("You diden't complete your setup! ");
+                    errorWindow.setContentText("please take a look.");
+                    errorWindow.showAndWait();
+                }
             }
 
         });

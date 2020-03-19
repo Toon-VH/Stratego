@@ -35,7 +35,7 @@ public class SelectedSoldier {
         this.y = y;
     }
 
-    public PawnLocation getFrom() {
+    public PawnLocation getSelected() {
         return selected;
     }
 

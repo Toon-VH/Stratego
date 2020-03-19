@@ -5,10 +5,8 @@ import Stratego.Model.gamePlay.army.Army;
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.Pawn;
 import Stratego.Model.gamePlay.army.RankType;
-import Stratego.Model.gamePlay.player.Player;
 import Stratego.Model.gamePlay.playground.Location;
 import Stratego.Model.gamePlay.playground.PawnLocation;
-import Stratego.Model.gamePlay.playground.Playground;
 import Stratego.Model.gameSetup.StrategoSetup;
 import Stratego.View.HomeScreen.HomeScreenPresenter;
 import Stratego.View.HomeScreen.HomeScreenView;
@@ -24,43 +22,45 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javax.swing.text.View;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 public class GameScreenPresenter {
 
     private Stratego model;
     private GameScreenView view;
-    UISettings uiSettings;
+    private UISettings uiSettings;
     private Stage stage;
     private boolean pauze;
     private SelectedSoldier selectedSoldier;
-    private SelectedSoldier targetSoldier;
+    private SelectedSoldier targetPlace;
 
 
     public GameScreenPresenter(Stratego model, GameScreenView view, UISettings uiSettings, Stage stage) {
-        selectedSoldier = null;
-        targetSoldier = null;
+        this.pauze = true;
+        this.selectedSoldier = null;
+        this.targetPlace = null;
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
         this.stage = stage;
-        model.loadArmySetup(ArmyColor.Red, uiSettings.getRedS());
-        model.loadArmySetup(ArmyColor.Blue, uiSettings.getBlueS());
+        this.model.loadArmySetup(ArmyColor.Red, uiSettings.getRedS());
+        this.model.loadArmySetup(ArmyColor.Blue, uiSettings.getBlueS());
         this.addEventHandlers();
         this.updateView();
     }
 
     private void addEventHandlers() {
+
         // Koppelt event handlers (anon. inner klassen)
         // aan de controls uit de view.
         // Event handlers: roepen methodes aan uit het
         // model en zorgen voor een update van de view.
+
         view.getImgInfo().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -81,39 +81,56 @@ public class GameScreenPresenter {
                     int x = position.getX();
                     int y = position.getY();
 
-                    if (!pauze) {
+                    //State Game
 
-                        PawnLocation pawnLocation = (PawnLocation) model.getPlayground().getLocations()[x][y];
-
+                    PawnLocation pawnLocation = (PawnLocation) model.getPlayground().getLocations()[x][y];
+                    if (targetPlace != null) {
+                        if (targetPlace.getSelected() == pawnLocation) {
+                            placeOn(x, y, targetPlace.getSelected());
+                            updateView();
+                        }
+                    } else if (!pauze) {
                         if (pawnLocation.getStandOn() != null && selectedSoldier == null) {
                             //first soldier selected
                             if (pawnLocation.getStandOn().getParent().getColor() == model.getActivePlayer().getArmy().getColor()) {
+                                //soldier from right army selected
                                 takeOn(x, y, pawnLocation);
                             } else {
                                 //wrong army do nothing
                             }
                         } else if (pawnLocation.getStandOn() != null && selectedSoldier != null) {
                             //two soldiers selected
-                            if (pawnLocation.getStandOn() != selectedSoldier.getFrom().getStandOn()) {
+                            if (pawnLocation.getStandOn() != selectedSoldier.getSelected().getStandOn()) {
                                 //two diffrend soldiers
                                 if (pawnLocation.getStandOn().getParent().getColor() == model.getActivePlayer().getArmy().getColor()) {
                                     //new soldier same army
                                     takeOn(x, y, pawnLocation);
-                                } else {
-                                    //other army
-                                    placeOn(x, y, pawnLocation);
+                                } else if (isPlaceValid(x, y)) {
+                                    //other army or grass
+                                    //placeOn(x, y, pawnLocation);
+                                    targetPlace = new SelectedSoldier();
+                                    targetPlace.setSelected(pawnLocation);
+                                    targetPlace.setX(x);
+                                    targetPlace.setY(y);
+                                    placeOnGrassOrSoldier(targetPlace);
                                 }
                             } else {
                                 //same soldier selected,do nothing!
                             }
                         } else if (pawnLocation.getStandOn() == null && selectedSoldier == null) {
                             //only grass selected,do nothing
-                        } else {
+                        } else if (isPlaceValid(x, y)) {
                             //grass selected and soldier
-                            placeOn(x, y, pawnLocation);
+                            //placeOn(x, y, pawnLocation);
+                            targetPlace = new SelectedSoldier();
+                            targetPlace.setSelected(pawnLocation);
+                            targetPlace.setX(x);
+                            targetPlace.setY(y);
+                            placeOnGrassOrSoldier(targetPlace);
                         }
                         updateView();
                     }
+
                 }
             });
 
@@ -140,6 +157,15 @@ public class GameScreenPresenter {
         }
     }
 
+    private void placeOnGrassOrSoldier(SelectedSoldier targetPlace) {
+        if (targetPlace.getSelected().getStandOn() != null) {
+            //target is soldier
+        } else {
+            //target is grass
+            placeOn(targetPlace.getX(), targetPlace.getY(), targetPlace.getSelected());
+        }
+    }
+
     private void takeOn(int x, int y, PawnLocation pawnLocation) {
         selectedSoldier = new SelectedSoldier();
         selectedSoldier.setY(y);
@@ -155,6 +181,7 @@ public class GameScreenPresenter {
     private void placeOn(int x, int y, PawnLocation pawnLocation) {
         try {
             model.getActivePlayer().place(pawnLocation, model.getPlayground());
+
             if (model.getPlayground().isFlagCaptured()) {
                 String string = "";
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -186,7 +213,7 @@ public class GameScreenPresenter {
                 }
             }
 
-            targetSoldier = new SelectedSoldier(x, y, pawnLocation);
+            targetPlace = new SelectedSoldier(x, y, pawnLocation);
 
             nextRun();
 
@@ -198,10 +225,22 @@ public class GameScreenPresenter {
         }
     }
 
+    private boolean isPlaceValid(int x, int y) {
+        Location[][] locations = model.getPlayground().getLocations();
+        Location selected = locations[x][y];
+        PawnLocation pawnLocation = null;
+        Boolean result = false;
+        if (locations[x][y] instanceof PawnLocation) {
+            pawnLocation = (PawnLocation) locations[x][y];
+            result = pawnLocation.isInRange();
+        }
+        return result;
+    }
+
     private void nextRun() {
         selectedSoldier = null;
         pauze = true;
-        targetSoldier = null;
+        targetPlace = null;
     }
 
     private void play() {
@@ -252,7 +291,10 @@ public class GameScreenPresenter {
             } else
                 nextPlayer = Turn.Blue;
         } else nextPlayer = Turn.None;
-        view.refresh(turn, setup, selectedSoldier, nextPlayer,targetSoldier);
+
+
+        ArmyStatus armyStatus = creatArmyStatus(model.getPlayground().getDead());
+        view.refresh(turn, setup, selectedSoldier, nextPlayer, targetPlace,armyStatus);
     }
 
     public void addWindowEventHandlers() {
@@ -284,6 +326,32 @@ public class GameScreenPresenter {
         } else {
             view.getScene().getWindow().hide();
         }
+    }
+
+    private ArmyStatus creatArmyStatus(List<Pawn> deads) {
+        ArmyStatus armyStatus = new ArmyStatus();
+
+        for (Pawn pawn : deads) {
+            switch (pawn.getParent().getColor()) {
+                case Blue:
+                    if (armyStatus.getArmyStatusBlue().containsKey(pawn.getRank())) {
+                        int dead = armyStatus.getArmyStatusBlue().get(pawn.getRank());
+                        armyStatus.getArmyStatusBlue().put(pawn.getRank(), dead + 1);
+                    } else {
+                        armyStatus.getArmyStatusBlue().put(pawn.getRank(), 1);
+                    }
+                    break;
+                case Red:
+                    if (armyStatus.getArmyStatusRed().containsKey(pawn.getRank())) {
+                        int dead = armyStatus.getArmyStatusRed().get(pawn.getRank());
+                        armyStatus.getArmyStatusRed().put(pawn.getRank(), dead + 1);
+                    } else {
+                        armyStatus.getArmyStatusRed().put(pawn.getRank(), 1);
+                    }
+                    break;
+            }
+        }
+        return armyStatus;
     }
 
 

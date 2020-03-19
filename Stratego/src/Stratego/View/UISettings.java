@@ -21,6 +21,9 @@ public class UISettings {
     private Path startScreenImagePath = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "StartScreenImage.png");
     private Path grassImg = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "grass1.png");
     private Path water1 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "water1.png");
+    private Path water2 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "water2.png");
+    private Path water3 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "water3.png");
+    private Path water4 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "water4.png");
     private Path b10 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueMar.png");
     private Path b9 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueGen.png");
     private Path b8 = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blueCol.png");
@@ -49,8 +52,7 @@ public class UISettings {
     private Path bBack = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "blue_back.png");
     private Path rBack = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "red_back.png");
 
-
-
+    private Path backG = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "background.jpg");
 
     private Path redS = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "setups" + FILE_SEPARATOR + "redS.txt");
     private Path blueS = Paths.get("Stratego" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "setups" + FILE_SEPARATOR + "blueS.txt");
@@ -124,6 +126,18 @@ public class UISettings {
 
     public Path getWater1() {
         return water1;
+    }
+
+    public Path getWater2() {
+        return water2;
+    }
+
+    public Path getWater3() {
+        return water3;
+    }
+
+    public Path getWater4() {
+        return water4;
     }
 
     public Path getInfoImg() {
@@ -241,6 +255,10 @@ public class UISettings {
 
     public Path getbBack() {
         return bBack;
+    }
+
+    public Path getBackG() {
+        return backG;
     }
 
     public Path getrBack() {

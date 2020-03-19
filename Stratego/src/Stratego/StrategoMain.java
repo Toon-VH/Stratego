@@ -230,7 +230,7 @@ public class StrategoMain extends Application {
                         }
                     } else result += "0";
                     result += "\u001B[37m";
-                } else if (locations[x - 2][y - 2] instanceof Location) {
+                } else if (locations[x - 2][y - 2] != null) {
                     result += "~";
                 }
                 result += "\t";
