@@ -36,7 +36,7 @@ public class Playground {
         for (int x = 0; x <= 9; x++) {
             for (int y = 0; y <= 9; y++) {
                 if (locations[x][y] == null) {
-                    locations[x][y] = new PawnLocation();
+                    locations[x][y] = new PawnLocation(x,y);
                 }
             }
         }

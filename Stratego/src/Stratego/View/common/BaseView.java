@@ -1,6 +1,5 @@
 package Stratego.View.common;
 
-import Stratego.Model.gamePlay.army.Army;
 import Stratego.Model.gamePlay.army.ArmyColor;
 import Stratego.Model.gamePlay.army.RankType;
 import Stratego.View.UISettings;

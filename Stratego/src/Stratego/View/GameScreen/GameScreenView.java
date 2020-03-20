@@ -267,7 +267,7 @@ public class GameScreenView extends BaseView {
         return deadArmy;
     }
 
-    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier, ArmyStatus armyStatus,boolean aI) {
+    public void refresh(Turn turn, LocationInfo[][] locationInfo, SelectedSoldier selectedSoldier, Turn nextPlayer, SelectedSoldier targetsoldier, ArmyStatus armyStatus, boolean aI) {
 
         switch (nextPlayer) {
             case Red:
@@ -299,6 +299,11 @@ public class GameScreenView extends BaseView {
                     if (x == selectedSoldier.getX() && y == selectedSoldier.getY()) {
                         position.setBorder(new Border(new BorderStroke(Color.GREEN,
                                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+                    } else if (targetsoldier != null) {
+                        if (x == targetsoldier.getX() && y == targetsoldier.getY()) {
+                            position.setBorder(new Border(new BorderStroke(Color.RED,
+                                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+                        }
                     } else if (info.isLoctionInRange()) {
                         position.setBorder(new Border(new BorderStroke(Color.YELLOW,
                                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));

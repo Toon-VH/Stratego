@@ -4,9 +4,15 @@ import Stratego.Model.gamePlay.army.Pawn;
 
 public class PawnLocation extends Location {
 
-    Pawn standOn;
-    protected  boolean isInRange;
+    public Pawn standOn;
+    private boolean isInRange;
+    private int x;
+    private  int y;
 
+    public PawnLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public boolean isInRange() {
         return isInRange;
@@ -23,5 +29,13 @@ public class PawnLocation extends Location {
 
     public void setStandOn(Pawn standOn) {
         this.standOn = standOn;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

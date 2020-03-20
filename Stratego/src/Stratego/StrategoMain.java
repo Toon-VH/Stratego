@@ -29,7 +29,7 @@ public class StrategoMain extends Application {
         UISettings uiSettings = new UISettings();
         Stratego model = new Stratego("Speler1", "Speler2");
         StrategoSetup strategoSetup = new StrategoSetup();
-        AI ai = new AI();
+        AI ai = new AI(model);
         StartScreenView view = new StartScreenView(uiSettings);
         StartScreenPresenter presenter = new StartScreenPresenter(model, strategoSetup,ai, view, uiSettings, primaryStage);
         Scene scene = new Scene(view);
