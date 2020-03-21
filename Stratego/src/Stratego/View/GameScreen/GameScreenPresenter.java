@@ -310,7 +310,7 @@ public class GameScreenPresenter {
         } else {
             if (model.getActivePlayer().getArmy().getColor() == ArmyColor.Red) {
                 if (aIPlayer) {
-                    turn = Turn.Red;
+                    turn = Turn.None;
                 } else turn = Turn.Red;
 
             } else {
